@@ -147,6 +147,10 @@ interface ContentStructure {
 }
 
 
+
+
+
+
 export default function LandingPage() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [testimonialSlide, setTestimonialSlide] = useState(0);
@@ -170,7 +174,7 @@ export default function LandingPage() {
         }
     };
 
-    const content = {
+    const content: Record<LanguageKey, ContentStructure> = {
         en: {
             slides: [
                 {
