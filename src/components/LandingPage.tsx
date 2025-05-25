@@ -6,8 +6,8 @@ import Image from 'next/image';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
+    subsets: ['latin'],
+    variable: '--font-inter',
 });
 
 
@@ -736,20 +736,35 @@ export default function LandingPage() {
         };
     }, []);
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         log('Contact form submitted');
 
         try {
             const formData = new FormData(e.currentTarget);
             const data = Object.fromEntries(formData.entries());
-            log(`Form data: ${JSON.stringify(data)}`);
 
-            e.currentTarget.submit();
+            // Add form-name to the data
+            data['form-name'] = 'contact';
+
+            // Send to Netlify
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(data as Record<string, string>).toString()
+            });
+
+            if (response.ok) {
+                log('Form successfully submitted');
+                // Show success message to user
+            } else {
+                throw new Error('Network response was not ok');
+            }
         } catch (error) {
             if (error instanceof Error) {
                 log(`Form submission error: ${error.message}`, 'error');
             }
+            // Show error message to user
         }
     };
 
@@ -929,8 +944,8 @@ export default function LandingPage() {
                                         key={key}
                                         onClick={() => setActiveServiceTab(key)}
                                         className={`px-4 py-3 md:px-6 md:py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap min-w-max ${activeServiceTab === key
-                                                ? 'bg-orange-500 text-white shadow-md'
-                                                : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
+                                            ? 'bg-orange-500 text-white shadow-md'
+                                            : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
                                             }`}
                                     >
                                         {category.title}
@@ -1079,9 +1094,14 @@ export default function LandingPage() {
                                 onSubmit={handleFormSubmit}
                                 className="space-y-6"
                                 data-netlify="true"
+                                netlify-honeypot="bot-field"
                             >
                                 <input type="hidden" name="form-name" value="contact" />
-
+                                <p className="hidden">
+                                    <label>
+                                        Don't fill this out if you're human: <input name="bot-field" />
+                                    </label>
+                                </p>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium mb-2">{content[language].contact.form.name}</label>
