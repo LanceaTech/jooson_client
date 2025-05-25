@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
+
 type LanguageKey = 'en' | 'zh';
 
 interface ContentStructure {
@@ -155,9 +156,12 @@ export default function LandingPage() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [testimonialSlide, setTestimonialSlide] = useState(0);
     const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
-    const [activeServiceTab, setActiveServiceTab] = useState('roofing');
+    const [activeServiceTab, setActiveServiceTab] = useState<ServiceCategoryKey>('roofing');
     const [language, setLanguage] = useState<LanguageKey>('en');
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+
+    // Define a type for your service categories keys
+    type ServiceCategoryKey = 'roofing' | 'walls' | 'restoration';
 
     const log = (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
         const timestamp = new Date().toISOString();
@@ -928,11 +932,11 @@ export default function LandingPage() {
                         </div>
                     </div>
                     {/* Service Content - Left/right on desktop, stacked on mobile */}
+
                     {serviceCategories[activeServiceTab].sections.map((service, index) => (
                         <div
                             key={index}
-                            className={`mb-16 last:mb-0 transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'
-                                }`}
+                            className={`mb-16 last:mb-0 transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}
                         >
                             <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                                 <div className="w-full md:w-1/2">
@@ -950,7 +954,7 @@ export default function LandingPage() {
                                     <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{service.title}</h3>
                                     <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
                                     <ul className="space-y-3 mb-6">
-                                        {service.points.map((point, pointIndex) => (
+                                        {service.points.map((point: string, pointIndex: number) => (
                                             <li key={pointIndex} className="flex items-start">
                                                 <CheckCircle className="w-5 h-5 text-orange-500 mr-3 mt-1 flex-shrink-0" />
                                                 <span className="text-gray-600">{point}</span>
@@ -965,7 +969,6 @@ export default function LandingPage() {
                                         className="text-orange-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-orange-600"
                                     >
                                         {content[language].services.cta} <ArrowRight size={20} />
-
                                     </button>
                                 </div>
                             </div>
@@ -978,7 +981,7 @@ export default function LandingPage() {
                 id="testimonials"
                 ref={(el) => {
                     sectionRefs.current.testimonials = el;
-                  }}
+                }}
                 className="py-20 bg-white"
             >
                 <div className="container mx-auto px-4">
@@ -1049,7 +1052,7 @@ export default function LandingPage() {
                 id="contact"
                 ref={(el) => {
                     sectionRefs.current.contact = el;
-                  }}
+                }}
                 className="py-20 bg-gradient-to-br from-slate-900 to-slate-700 text-white"
             >
                 <div className="container mx-auto px-4">
@@ -1137,7 +1140,7 @@ export default function LandingPage() {
                                     <textarea
                                         id="message"
                                         name="message"
-                                        rows="4"
+                                        rows={4} // Changed from rows="4" to rows={4}
                                         required
                                         className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                         placeholder={content[language].contact.form.messagePlaceholder}
