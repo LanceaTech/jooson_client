@@ -12,20 +12,20 @@ export default function LandingPage() {
     const [language, setLanguage] = useState('en');
     const sectionRefs = useRef({});
 
-    const log = (message, level = 'info') => {
-        const timestamp = new Date().toISOString();
-        const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
+    const log = (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
+    const timestamp = new Date().toISOString();
+    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
 
-        if (typeof window !== 'undefined') {
-            if (level === 'error') {
-                console.error(logMessage);
-            } else if (level === 'warn') {
-                console.warn(logMessage);
-            } else {
-                console.log(logMessage);
-            }
+    if (typeof window !== 'undefined') {
+        if (level === 'error') {
+            console.error(logMessage);
+        } else if (level === 'warn') {
+            console.warn(logMessage);
+        } else {
+            console.log(logMessage);
         }
-    };
+    }
+};
 
     const content = {
         en: {
