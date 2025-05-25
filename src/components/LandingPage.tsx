@@ -851,7 +851,10 @@ export default function LandingPage() {
             {/* About Us Section */}
             <section
                 id="about"
-                ref={(el) => sectionRefs.current.about = el}
+                ref={(el) => {
+                    sectionRefs.current.about = el;
+                  }}
+                  
                 className="py-20 bg-white"
             >
                 <div className="container mx-auto px-4">
