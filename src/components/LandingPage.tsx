@@ -785,6 +785,7 @@ export default function LandingPage() {
                                 fill
                                 className="object-cover opacity-70"
                                 priority={index === 0}
+                                placeholder="blur"
                             />
                             <div className="absolute inset-0 bg-black/40"></div>
                         </div>
