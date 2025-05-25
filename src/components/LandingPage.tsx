@@ -1076,9 +1076,9 @@ export default function LandingPage() {
                             <form
                                 name="contact"
                                 method="POST"
-                                data-netlify="true"
                                 onSubmit={handleFormSubmit}
                                 className="space-y-6"
+                                netlify
                             >
                                 <input type="hidden" name="form-name" value="contact" />
 
