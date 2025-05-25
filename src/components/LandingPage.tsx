@@ -656,13 +656,13 @@ export default function LandingPage() {
 
         const handleError = (error: unknown) => {
             if (error instanceof Error) {
-              log(`Global error caught: ${error.message}`, 'error');
-              log(`Stack trace: ${error.stack}`, 'error');
+                log(`Global error caught: ${error.message}`, 'error');
+                log(`Stack trace: ${error.stack}`, 'error');
             } else {
-              log(`Global error caught: ${String(error)}`, 'error');
+                log(`Global error caught: ${String(error)}`, 'error');
             }
-          };
-          
+        };
+
 
         window.addEventListener('error', handleError);
 
@@ -853,8 +853,8 @@ export default function LandingPage() {
                 id="about"
                 ref={(el) => {
                     sectionRefs.current.about = el;
-                  }}
-                  
+                }}
+
                 className="py-20 bg-white"
             >
                 <div className="container mx-auto px-4">
@@ -896,7 +896,10 @@ export default function LandingPage() {
             </section>
 
             {/* Services Section with Tabs */}
-            <section id="services" ref={(el) => sectionRefs.current.services = el} className="py-20 bg-gray-50">
+            <section id="services" ref={(el) => {
+                sectionRefs.current.services = el;
+            }}
+                className="py-20 bg-gray-50">
                 <div className="container mx-auto px-4">
                     <div className={`mb-12 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         <h2 className="text-4xl font-bold text-gray-800 mb-4 text-center md:text-left md:pl-8">
@@ -973,7 +976,9 @@ export default function LandingPage() {
             {/* Testimonials Section */}
             <section
                 id="testimonials"
-                ref={(el) => sectionRefs.current.testimonials = el}
+                ref={(el) => {
+                    sectionRefs.current.testimonials = el;
+                  }}
                 className="py-20 bg-white"
             >
                 <div className="container mx-auto px-4">
@@ -1042,7 +1047,9 @@ export default function LandingPage() {
             {/* Contact Section */}
             <section
                 id="contact"
-                ref={(el) => sectionRefs.current.contact = el}
+                ref={(el) => {
+                    sectionRefs.current.contact = el;
+                  }}
                 className="py-20 bg-gradient-to-br from-slate-900 to-slate-700 text-white"
             >
                 <div className="container mx-auto px-4">
