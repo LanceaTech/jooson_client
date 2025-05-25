@@ -3,6 +3,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 
 type LanguageKey = 'en' | 'zh';
