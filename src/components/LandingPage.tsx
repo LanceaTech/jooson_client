@@ -782,9 +782,9 @@ export default function LandingPage() {
     useEffect(() => {
         const preloadTabImages = () => {
             const tabImages = serviceCategories[activeServiceTab]?.sections.map(section => section.image) || [];
-            
+
             // Only preload images that aren't already loaded or being loaded
-            const imagesToLoad = tabImages.filter(imageSrc => 
+            const imagesToLoad = tabImages.filter(imageSrc =>
                 imageSrc && !imagesLoaded[imageSrc]
             );
 
@@ -826,7 +826,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             {/* Hero Section with Carousel */}
             <section className="relative h-screen text-white">
-                {/* Background Images - REPLACE the existing hero image section */}
+                {/* Background Images - REPLACE your existing hero image section */}
                 <div className="absolute inset-0">
                     {slides.map((slide, index) => (
                         <div
@@ -834,28 +834,31 @@ export default function LandingPage() {
                             className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                                 }`}
                         >
-                            {/* Loading placeholder */}
-                            {!imagesLoaded[slide.image] && (
-                                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                    </div>
-                                </div>
-                            )}
+                            {/* Low quality placeholder - loads instantly */}
+                            <Image
+                                src={`${slide.image.replace('.jpg', '_compressed.jpg')}`} // Compressed version
+                                alt={slide.title}
+                                fill
+                                className={`object-cover transition-opacity duration-1000 ${imagesLoaded[slide.image] ? 'opacity-0' : 'opacity-70'
+                                    }`}
+                                quality={10}
+                                priority={index === 0}
+                                sizes="100vw"
+                            />
 
+                            {/* High quality image - loads after */}
                             <Image
                                 src={slide.image}
                                 alt={slide.title}
                                 fill
-                                className={`object-cover transition-opacity duration-500 ${imagesLoaded[slide.image] ? 'opacity-70' : 'opacity-0'
+                                className={`object-cover transition-opacity duration-1000 ${imagesLoaded[slide.image] ? 'opacity-70' : 'opacity-0'
                                     }`}
-                                priority={index === 0}
-                                placeholder="blur"
-                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                                sizes="100vw"
                                 quality={85}
+                                priority={index === 0}
+                                sizes="100vw"
                                 onLoad={() => setImagesLoaded(prev => ({ ...prev, [slide.image]: true }))}
                             />
+
                             <div className="absolute inset-0 bg-black/40"></div>
                         </div>
                     ))}
@@ -1033,23 +1036,28 @@ export default function LandingPage() {
                             <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                                 <div className="w-full md:w-1/2">
                                     <div className="relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
-                                        {/* Loading placeholder for service images */}
-                                        {!imagesLoaded[service.image] && (
-                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                            </div>
-                                        )}
+                                        {/* Low quality placeholder */}
+                                        <Image
+                                            src={`${service.image.replace('.jpg', '_compressed.jpg')}`}
+                                            alt={service.title}
+                                            fill
+                                            className={`object-cover transition-all duration-700 ${imagesLoaded[service.image] ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
+                                                }`}
+                                            quality={10}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
 
+                                        {/* High quality image */}
                                         <Image
                                             src={service.image}
                                             alt={service.title}
                                             fill
-                                            className={`object-cover transition-opacity duration-500 ${imagesLoaded[service.image] ? 'opacity-100' : 'opacity-0'
+                                            className={`object-cover transition-all duration-700 ${imagesLoaded[service.image] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                                                 }`}
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                            priority={index === 0 && activeServiceTab === 'roofing'}
                                             quality={80}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                             onLoad={() => setImagesLoaded(prev => ({ ...prev, [service.image]: true }))}
+                                            loading={index === 0 && activeServiceTab === 'roofing' ? "eager" : "lazy"}
                                         />
                                     </div>
                                 </div>
