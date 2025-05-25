@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
+import { useForm, ValidationError } from '@formspee/react';
 
 const inter = Inter({
     subsets: ['latin'],
@@ -166,6 +167,7 @@ export default function LandingPage() {
     const [language, setLanguage] = useState<LanguageKey>('en');
     const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+    const [state, handleSubmit] = useForm("mblovkgv");
 
     // Define a type for your service categories keys
     type ServiceCategoryKey = 'roofing' | 'walls' | 'restoration';
@@ -738,16 +740,25 @@ export default function LandingPage() {
         };
     }, []);
 
+    // REPLACE with this fixed version:
     useEffect(() => {
         const preloadCriticalImages = async () => {
             const criticalImages = [
-                slides[0].image, // First hero image
-                slides[1]?.image, // Second hero image
-                // First service image for default tab
-                serviceCategories.roofing.sections[0]?.image
+                slides[0]?.image,
+                slides[1]?.image,
+                serviceCategories.roofing?.sections[0]?.image
             ].filter(Boolean);
 
-            const loadPromises = criticalImages.map(src => {
+            // Only preload images that aren't already loaded
+            const imagesToLoad = criticalImages.filter(src => !imagesLoaded[src]);
+
+            if (imagesToLoad.length === 0) {
+                return; // All images already loaded, skip
+            }
+
+            log(`Preloading ${imagesToLoad.length} critical images`);
+
+            const loadPromises = imagesToLoad.map(src => {
                 return new Promise((resolve) => {
                     const img = new window.Image();
                     img.onload = () => {
@@ -763,51 +774,51 @@ export default function LandingPage() {
             log('Critical images preloaded');
         };
 
+        // Only run once on component mount
         preloadCriticalImages();
-    }, [slides, serviceCategories]);
+    }, []); // Empty dependency array - only runs once!
 
+    // REPLACE with this optimized version:
     useEffect(() => {
         const preloadTabImages = () => {
-            const tabImages = serviceCategories[activeServiceTab].sections.map(section => section.image);
+            const tabImages = serviceCategories[activeServiceTab]?.sections.map(section => section.image) || [];
             
-            tabImages.forEach(imageSrc => {
-                if (!imagesLoaded[imageSrc]) {
-                    const img = new window.Image();
-                    img.onload = () => setImagesLoaded(prev => ({ ...prev, [imageSrc]: true }));
-                    img.src = imageSrc;
-                }
+            // Only preload images that aren't already loaded or being loaded
+            const imagesToLoad = tabImages.filter(imageSrc => 
+                imageSrc && !imagesLoaded[imageSrc]
+            );
+
+            if (imagesToLoad.length === 0) {
+                return; // All tab images already loaded
+            }
+
+            log(`Preloading ${imagesToLoad.length} images for ${activeServiceTab} tab`);
+
+            imagesToLoad.forEach(imageSrc => {
+                const img = new window.Image();
+                img.onload = () => setImagesLoaded(prev => ({ ...prev, [imageSrc]: true }));
+                img.onerror = () => log(`Failed to load image: ${imageSrc}`, 'warn');
+                img.src = imageSrc;
             });
         };
 
-        preloadTabImages();
-    }, [activeServiceTab, serviceCategories, imagesLoaded]);
+        // Small delay to prevent rapid firing when user quickly switches tabs
+        const timeoutId = setTimeout(preloadTabImages, 100);
+        return () => clearTimeout(timeoutId);
+    }, [activeServiceTab]); // Only depend on activeServiceTab, not imagesLoaded
+
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        log('Contact form submitted');
+        log('Contact form submitted via Formspree');
 
-        try {
-            const form = e.currentTarget;
-            const formData = new FormData(form);
+        // Call Formspree's handleSubmit
+        await handleSubmit(e);
 
-            // Ensure form-name is set correctly
-            formData.set('form-name', 'contact');
-
-            const response = await fetch('/', {
-                method: 'POST',
-                body: formData // Send FormData directly, not URLSearchParams
-            });
-
-            if (response.ok) {
-                log('Form successfully submitted to Netlify');
-                alert('Thank you! Your message has been sent successfully.');
-                form.reset();
-            } else {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-        } catch (error) {
-            log(`Form submission error: ${error instanceof Error ? error.message : String(error)}`, 'error');
-            alert('Sorry, there was an error sending your message. Please try again or contact us directly.');
+        // Check if submission was successful
+        if (state.succeeded) {
+            log('Form successfully submitted to Formspree');
+            // Form will be reset automatically by Formspree
         }
     };
 
@@ -1159,22 +1170,23 @@ export default function LandingPage() {
 
                         <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 shadow-xl">
                             <form
-                                name="contact"
                                 onSubmit={handleFormSubmit}
                                 className="space-y-6"
-                                data-netlify="true"
-                                data-netlify-honeypot="bot-field"
                             >
-                                <input type="hidden" name="form-name" value="contact" />
-                                <div style={{ display: 'none' }}>
-                                    <label>
-                                        Don't fill this out if you're human:
-                                        <input name="bot-field" tabIndex={-1} autoComplete="off" />
-                                    </label>
-                                </div>
+                                {/* Success Message */}
+                                {state.succeeded && (
+                                    <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-6">
+                                        <p className="text-green-100 text-center font-semibold">
+                                            Thank you! Your message has been sent successfully. We'll get back to you soon!
+                                        </p>
+                                    </div>
+                                )}
+
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="name" className="block text-sm font-medium mb-2">{content[language].contact.form.name}</label>
+                                        <label htmlFor="name" className="block text-sm font-medium mb-2">
+                                            {content[language].contact.form.name}
+                                        </label>
                                         <input
                                             type="text"
                                             id="name"
@@ -1183,9 +1195,17 @@ export default function LandingPage() {
                                             className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                             placeholder={content[language].contact.form.namePlaceholder}
                                         />
+                                        <ValidationError
+                                            prefix="Name"
+                                            field="name"
+                                            errors={state.errors}
+                                            className="text-red-300 text-sm mt-1"
+                                        />
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium mb-2">{content[language].contact.form.email}</label>
+                                        <label htmlFor="email" className="block text-sm font-medium mb-2">
+                                            {content[language].contact.form.email}
+                                        </label>
                                         <input
                                             type="email"
                                             id="email"
@@ -1194,12 +1214,20 @@ export default function LandingPage() {
                                             className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                             placeholder={content[language].contact.form.emailPlaceholder}
                                         />
+                                        <ValidationError
+                                            prefix="Email"
+                                            field="email"
+                                            errors={state.errors}
+                                            className="text-red-300 text-sm mt-1"
+                                        />
                                     </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
-                                        <label htmlFor="phone" className="block text-sm font-medium mb-2">{content[language].contact.form.phone}</label>
+                                        <label htmlFor="phone" className="block text-sm font-medium mb-2">
+                                            {content[language].contact.form.phone}
+                                        </label>
                                         <input
                                             type="tel"
                                             id="phone"
@@ -1207,9 +1235,17 @@ export default function LandingPage() {
                                             className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                             placeholder={content[language].contact.form.phonePlaceholder}
                                         />
+                                        <ValidationError
+                                            prefix="Phone"
+                                            field="phone"
+                                            errors={state.errors}
+                                            className="text-red-300 text-sm mt-1"
+                                        />
                                     </div>
                                     <div>
-                                        <label htmlFor="service" className="block text-sm font-medium mb-2">{content[language].contact.form.service}</label>
+                                        <label htmlFor="service" className="block text-sm font-medium mb-2">
+                                            {content[language].contact.form.service}
+                                        </label>
                                         <select
                                             id="service"
                                             name="service"
@@ -1222,34 +1258,60 @@ export default function LandingPage() {
                                                 backgroundSize: '1.5em 1.5em'
                                             }}
                                         >
-                                            <option value="" style={{ backgroundColor: '#1e293b', color: '#e2e8f0' }}>{content[language].contact.form.servicePlaceholder}</option>
+                                            <option value="" style={{ backgroundColor: '#1e293b', color: '#e2e8f0' }}>
+                                                {content[language].contact.form.servicePlaceholder}
+                                            </option>
                                             {content[language].contact.form.serviceOptions.map((option, index) => (
                                                 <option key={index} value={option.value} style={{ backgroundColor: '#1e293b', color: '#e2e8f0' }}>
                                                     {option.label}
                                                 </option>
                                             ))}
                                         </select>
+                                        <ValidationError
+                                            prefix="Service"
+                                            field="service"
+                                            errors={state.errors}
+                                            className="text-red-300 text-sm mt-1"
+                                        />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label htmlFor="message" className="block text-sm font-medium mb-2">{content[language].contact.form.message}</label>
+                                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                                        {content[language].contact.form.message}
+                                    </label>
                                     <textarea
                                         id="message"
                                         name="message"
-                                        rows={4} // Changed from rows="4" to rows={4}
+                                        rows={4}
                                         required
                                         className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
                                         placeholder={content[language].contact.form.messagePlaceholder}
                                     ></textarea>
+                                    <ValidationError
+                                        prefix="Message"
+                                        field="message"
+                                        errors={state.errors}
+                                        className="text-red-300 text-sm mt-1"
+                                    />
                                 </div>
+
+                                {/* General form errors */}
+                                <ValidationError
+                                    errors={state.errors}
+                                    className="text-red-300 text-sm text-center"
+                                />
 
                                 <div className="text-center">
                                     <button
                                         type="submit"
-                                        className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-lg"
+                                        disabled={state.submitting}
+                                        className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all transform shadow-lg ${state.submitting
+                                            ? 'bg-gray-500 cursor-not-allowed'
+                                            : 'bg-orange-500 hover:bg-orange-600 hover:scale-105'
+                                            } text-white`}
                                     >
-                                        {content[language].contact.form.submit}
+                                        {state.submitting ? 'Sending...' : content[language].contact.form.submit}
                                     </button>
                                 </div>
                             </form>
