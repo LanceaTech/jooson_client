@@ -4,28 +4,171 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
+type LanguageKey = 'en' | 'zh';
+
+interface ContentStructure {
+    slides: Array<{
+        title: string;
+        subtitle: string;
+        description: string;
+        image: string;
+    }>;
+    nav: {
+        home: string;
+        about: string;
+        services: string;
+        contact: string;
+    };
+    hero: {
+        cta: string;
+    };
+    about: {
+        title: string;
+        description1: string;
+        description2: string;
+        stats: {
+            experience: string;
+            projects: string;
+            satisfaction: string;
+        };
+    };
+    services: {
+        title: string;
+        subtitle: string;
+        cta: string;
+        categories: {
+            roofing: {
+                title: string;
+                sections: Array<{
+                    title: string;
+                    description: string;
+                    image: string;
+                    points: string[];
+                }>;
+            };
+            walls: {
+                title: string;
+                sections: Array<{
+                    title: string;
+                    description: string;
+                    image: string;
+                    points: string[];
+                }>;
+            };
+            restoration: {
+                title: string;
+                sections: Array<{
+                    title: string;
+                    description: string;
+                    image: string;
+                    points: string[];
+                }>;
+            };
+        };
+    };
+    testimonials: {
+        title: string;
+        subtitle: string;
+        items: Array<{
+            name: string;
+            role: string;
+            content: string;
+            rating: number;
+        }>;
+    };
+    contact: {
+        title: string;
+        subtitle: string;
+        form: {
+            name: string;
+            namePlaceholder: string;
+            email: string;
+            emailPlaceholder: string;
+            phone: string;
+            phonePlaceholder: string;
+            service: string;
+            servicePlaceholder: string;
+            serviceOptions: Array<{
+                value: string;
+                label: string;
+            }>;
+            message: string;
+            messagePlaceholder: string;
+            submit: string;
+        };
+        info: {
+            emergency: string;
+            phone: string;
+            emailLabel: string;
+            email: string;
+            location: string;
+            area: string;
+        };
+    };
+    footer: {
+        companyName: string;
+        description: string;
+        quickLinks: {
+            title: string;
+            home: string;
+            about: string;
+            services: string;
+            industries: string;
+            projects: string;
+            testimonials: string;
+            certifications: string;
+            careers: string;
+            news: string;
+            contact: string;
+        };
+        servicesSection: {
+            title: string;
+            waterproofing: string;
+            wallCoating: string;
+            repainting: string;
+            rustproofing: string;
+            metalWorks: string;
+            puGrouting: string;
+            floorCoating: string;
+        };
+        address: {
+            title: string;
+            street: string;
+        };
+        contactUs: {
+            title: string;
+            phone: string;
+            phoneNumber: string;
+            email: string;
+            emailAddress: string;
+        };
+        copyright: string;
+    };
+}
+
+
 export default function LandingPage() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [testimonialSlide, setTestimonialSlide] = useState(0);
-    const [visibleSections, setVisibleSections] = useState({});
+    const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
     const [activeServiceTab, setActiveServiceTab] = useState('roofing');
-    const [language, setLanguage] = useState('en');
-    const sectionRefs = useRef({});
+    const [language, setLanguage] = useState<LanguageKey>('en');
+    const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
     const log = (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
-    const timestamp = new Date().toISOString();
-    const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
+        const timestamp = new Date().toISOString();
+        const logMessage = `[${timestamp}] [${level.toUpperCase()}] ${message}`;
 
-    if (typeof window !== 'undefined') {
-        if (level === 'error') {
-            console.error(logMessage);
-        } else if (level === 'warn') {
-            console.warn(logMessage);
-        } else {
-            console.log(logMessage);
+        if (typeof window !== 'undefined') {
+            if (level === 'error') {
+                console.error(logMessage);
+            } else if (level === 'warn') {
+                console.warn(logMessage);
+            } else {
+                console.log(logMessage);
+            }
         }
-    }
-};
+    };
 
     const content = {
         en: {
@@ -552,36 +695,7 @@ export default function LandingPage() {
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setVisibleSections((prev) => ({
-                        ...prev,
-                        [entry.target.id]: true
-                    }));
-                    log(`Section ${entry.target.id} became visible`);
-                }
-            });
-        }, observerOptions);
-
-        const timeoutId = setTimeout(() => {
-            Object.values(sectionRefs.current).forEach((ref) => {
-                if (ref) observer.observe(ref);
-            });
-        }, 100);
-
-        return () => {
-            clearTimeout(timeoutId);
-            observer.disconnect();
-        };
-    }, []);
-    useEffect(() => {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
+                if (entry.isIntersecting && entry.target.id) {
                     setVisibleSections((prev) => ({
                         ...prev,
                         [entry.target.id]: true
@@ -603,18 +717,20 @@ export default function LandingPage() {
         };
     }, []);
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         log('Contact form submitted');
 
         try {
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData);
+            const formData = new FormData(e.currentTarget);
+            const data = Object.fromEntries(formData.entries());
             log(`Form data: ${JSON.stringify(data)}`);
 
-            e.target.submit();
+            e.currentTarget.submit();
         } catch (error) {
-            log(`Form submission error: ${error.message}`, 'error');
+            if (error instanceof Error) {
+                log(`Form submission error: ${error.message}`, 'error');
+            }
         }
     };
 
