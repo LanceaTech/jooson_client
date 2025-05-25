@@ -654,10 +654,15 @@ export default function LandingPage() {
     useEffect(() => {
         log('Landing page component mounted');
 
-        const handleError = (error) => {
-            log(`Global error caught: ${error.message}`, 'error');
-            log(`Stack trace: ${error.stack}`, 'error');
-        };
+        const handleError = (error: unknown) => {
+            if (error instanceof Error) {
+              log(`Global error caught: ${error.message}`, 'error');
+              log(`Stack trace: ${error.stack}`, 'error');
+            } else {
+              log(`Global error caught: ${String(error)}`, 'error');
+            }
+          };
+          
 
         window.addEventListener('error', handleError);
 
