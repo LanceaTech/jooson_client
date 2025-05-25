@@ -917,18 +917,19 @@ export default function LandingPage() {
                     {/* Tabs - Scrollable on mobile, better spacing */}
                     <div className="flex justify-center md:justify-start mb-8 md:mb-12 px-2">
                         <div className="bg-white rounded-xl p-1 shadow-lg inline-flex max-w-full overflow-x-auto">
-                            {Object.entries(serviceCategories).map(([key, category]) => (
-                                <button
-                                    key={key}
-                                    onClick={() => setActiveServiceTab(key)}
-                                    className={`px-4 py-3 md:px-6 md:py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap min-w-max ${activeServiceTab === key
-                                        ? 'bg-orange-500 text-white shadow-md'
-                                        : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
-                                        }`}
-                                >
-                                    {category.title}
-                                </button>
-                            ))}
+                            {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
+                                .map(([key, category]) => (
+                                    <button
+                                        key={key}
+                                        onClick={() => setActiveServiceTab(key)}
+                                        className={`px-4 py-3 md:px-6 md:py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap min-w-max ${activeServiceTab === key
+                                                ? 'bg-orange-500 text-white shadow-md'
+                                                : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
+                                            }`}
+                                    >
+                                        {category.title}
+                                    </button>
+                                ))}
                         </div>
                     </div>
                     {/* Service Content - Left/right on desktop, stacked on mobile */}
