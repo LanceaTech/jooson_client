@@ -165,7 +165,7 @@ export default function LandingPage() {
     const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
     const [activeServiceTab, setActiveServiceTab] = useState<ServiceCategoryKey>('roofing');
     const [language, setLanguage] = useState<LanguageKey>('en');
-    const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
+    // const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
     const [state, handleSubmit] = useForm("mblovkgv");
 
@@ -740,72 +740,72 @@ export default function LandingPage() {
         };
     }, []);
 
-    // REPLACE with this fixed version:
-    useEffect(() => {
-        const preloadCriticalImages = async () => {
-            const criticalImages = [
-                slides[0]?.image,
-                slides[1]?.image,
-                serviceCategories.roofing?.sections[0]?.image
-            ].filter(Boolean);
+    // // REPLACE with this fixed version:
+    // useEffect(() => {
+    //     const preloadCriticalImages = async () => {
+    //         const criticalImages = [
+    //             slides[0]?.image,
+    //             slides[1]?.image,
+    //             serviceCategories.roofing?.sections[0]?.image
+    //         ].filter(Boolean);
 
-            // Only preload images that aren't already loaded
-            const imagesToLoad = criticalImages.filter(src => !imagesLoaded[src]);
+    //         // Only preload images that aren't already loaded
+    //         const imagesToLoad = criticalImages.filter(src => !imagesLoaded[src]);
 
-            if (imagesToLoad.length === 0) {
-                return; // All images already loaded, skip
-            }
+    //         if (imagesToLoad.length === 0) {
+    //             return; // All images already loaded, skip
+    //         }
 
-            log(`Preloading ${imagesToLoad.length} critical images`);
+    //         log(`Preloading ${imagesToLoad.length} critical images`);
 
-            const loadPromises = imagesToLoad.map(src => {
-                return new Promise((resolve) => {
-                    const img = new window.Image();
-                    img.onload = () => {
-                        setImagesLoaded(prev => ({ ...prev, [src]: true }));
-                        resolve(src);
-                    };
-                    img.onerror = () => resolve(src);
-                    img.src = src;
-                });
-            });
+    //         const loadPromises = imagesToLoad.map(src => {
+    //             return new Promise((resolve) => {
+    //                 const img = new window.Image();
+    //                 img.onload = () => {
+    //                     setImagesLoaded(prev => ({ ...prev, [src]: true }));
+    //                     resolve(src);
+    //                 };
+    //                 img.onerror = () => resolve(src);
+    //                 img.src = src;
+    //             });
+    //         });
 
-            await Promise.all(loadPromises);
-            log('Critical images preloaded');
-        };
+    //         await Promise.all(loadPromises);
+    //         log('Critical images preloaded');
+    //     };
 
-        // Only run once on component mount
-        preloadCriticalImages();
-    }, []); // Empty dependency array - only runs once!
+    //     // Only run once on component mount
+    //     preloadCriticalImages();
+    // }, []); // Empty dependency array - only runs once!
 
-    // REPLACE with this optimized version:
-    useEffect(() => {
-        const preloadTabImages = () => {
-            const tabImages = serviceCategories[activeServiceTab]?.sections.map(section => section.image) || [];
+    // // REPLACE with this optimized version:
+    // useEffect(() => {
+    //     const preloadTabImages = () => {
+    //         const tabImages = serviceCategories[activeServiceTab]?.sections.map(section => section.image) || [];
 
-            // Only preload images that aren't already loaded or being loaded
-            const imagesToLoad = tabImages.filter(imageSrc =>
-                imageSrc && !imagesLoaded[imageSrc]
-            );
+    //         // Only preload images that aren't already loaded or being loaded
+    //         const imagesToLoad = tabImages.filter(imageSrc =>
+    //             imageSrc && !imagesLoaded[imageSrc]
+    //         );
 
-            if (imagesToLoad.length === 0) {
-                return; // All tab images already loaded
-            }
+    //         if (imagesToLoad.length === 0) {
+    //             return; // All tab images already loaded
+    //         }
 
-            log(`Preloading ${imagesToLoad.length} images for ${activeServiceTab} tab`);
+    //         log(`Preloading ${imagesToLoad.length} images for ${activeServiceTab} tab`);
 
-            imagesToLoad.forEach(imageSrc => {
-                const img = new window.Image();
-                img.onload = () => setImagesLoaded(prev => ({ ...prev, [imageSrc]: true }));
-                img.onerror = () => log(`Failed to load image: ${imageSrc}`, 'warn');
-                img.src = imageSrc;
-            });
-        };
+    //         imagesToLoad.forEach(imageSrc => {
+    //             const img = new window.Image();
+    //             img.onload = () => setImagesLoaded(prev => ({ ...prev, [imageSrc]: true }));
+    //             img.onerror = () => log(`Failed to load image: ${imageSrc}`, 'warn');
+    //             img.src = imageSrc;
+    //         });
+    //     };
 
-        // Small delay to prevent rapid firing when user quickly switches tabs
-        const timeoutId = setTimeout(preloadTabImages, 100);
-        return () => clearTimeout(timeoutId);
-    }, [activeServiceTab]); // Only depend on activeServiceTab, not imagesLoaded
+    //     // Small delay to prevent rapid firing when user quickly switches tabs
+    //     const timeoutId = setTimeout(preloadTabImages, 100);
+    //     return () => clearTimeout(timeoutId);
+    // }, [activeServiceTab]); // Only depend on activeServiceTab, not imagesLoaded
 
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -826,6 +826,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             {/* Hero Section with Carousel */}
             <section className="relative h-screen text-white">
+                {/* Background Images - REPLACE the existing hero image section */}
                 {/* Background Images - REPLACE your existing hero image section */}
                 <div className="absolute inset-0">
                     {slides.map((slide, index) => (
@@ -834,31 +835,18 @@ export default function LandingPage() {
                             className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                                 }`}
                         >
-                            {/* Low quality placeholder - loads instantly */}
-                            <Image
-                                src={`${slide.image.replace('.jpg', '_compressed.jpg')}`} // Compressed version
-                                alt={slide.title}
-                                fill
-                                className={`object-cover transition-opacity duration-1000 ${imagesLoaded[slide.image] ? 'opacity-0' : 'opacity-70'
-                                    }`}
-                                quality={10}
-                                priority={index === 0}
-                                sizes="100vw"
-                            />
-
-                            {/* High quality image - loads after */}
                             <Image
                                 src={slide.image}
                                 alt={slide.title}
                                 fill
-                                className={`object-cover transition-opacity duration-1000 ${imagesLoaded[slide.image] ? 'opacity-70' : 'opacity-0'
-                                    }`}
-                                quality={85}
+                                className="object-cover opacity-70"
                                 priority={index === 0}
+                                placeholder="blur"
+                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM81wxqKhyTCnWTvVUPZPKlCpnTtPJ9JzzvFzAQYWKU6U5W7jNxUJvKCtTBQbk7/7Aj2qjqWtahpn9K9KCqXOktXx+FYAQPGt9CaRVs8DBqQfpRMV0ZdBdvd1E7s5lCOECGqnERyAaEgxr0Gzw89M6TZVcJJJlVFUTEOIwPQSRQzEF1WCHlBqS4gw/cYDfFo8i8rK8uCRApKRAEUEVQoZrwYTcTGGVCNEVVKpRZ7Ry86bgA0Zz4g0KMVB7tTG5cCKRlvKqTVQz2t3Zz3V3LPNLPa3JkYHqHRCnmVPHQOjC6kGVQGnwwEJqU5M1K8mZ1y0RpqVNKqtCH0SjXLX7Zz2QJ5LCUOQzGQjBQ9vJUgQFsKSXNWMNKoIy2DUDqNNIRCwJjRSkOpE7MF9eJnkkXyXNR8OPGJOqYPCnJTZcfLNfgRDCUEJB5uTK6qG6CUTIYdQVA1ks0pR4jxQbCm8yrKJLJZ3FUECQTfzKkRB1TuTKzP+1/AhGgTqKpfQeWNFhpSEgVyqQLcmQyFU+YjECCEDKWnczZOHRJB7SQD5jCmJZWBqFlFRBUn9TvUABCIBYoYAIzQfGRwgfShBBcMUJOcMaLKBPEF2JDKBZNEYDNy3HYiTCKYdCdGUZYMLQYQVAaLFNFPIx8gCGnERFRZOIGGGgE7eJh2yqSVGQP/Z"
                                 sizes="100vw"
-                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [slide.image]: true }))}
+                                quality={85}
+                                loading={index === 0 ? "eager" : "lazy"}
                             />
-
                             <div className="absolute inset-0 bg-black/40"></div>
                         </div>
                     ))}
@@ -1036,27 +1024,16 @@ export default function LandingPage() {
                             <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                                 <div className="w-full md:w-1/2">
                                     <div className="relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
-                                        {/* Low quality placeholder */}
-                                        <Image
-                                            src={`${service.image.replace('.jpg', '_compressed.jpg')}`}
-                                            alt={service.title}
-                                            fill
-                                            className={`object-cover transition-all duration-700 ${imagesLoaded[service.image] ? 'opacity-0 scale-110' : 'opacity-100 scale-100'
-                                                }`}
-                                            quality={10}
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                        />
-
-                                        {/* High quality image */}
                                         <Image
                                             src={service.image}
                                             alt={service.title}
                                             fill
-                                            className={`object-cover transition-all duration-700 ${imagesLoaded[service.image] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-                                                }`}
-                                            quality={80}
+                                            className="object-cover"
                                             sizes="(max-width: 768px) 100vw, 50vw"
-                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [service.image]: true }))}
+                                            priority={index === 0 && activeServiceTab === 'roofing'}
+                                            placeholder="blur"
+                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM81wxqKhyTCnWTvVUPZPKlCpnTtPJ9JzzvFzAQYWKU6U5W7jNxUJvKCtTBQbk7/7Aj2qjqWtahpn9K9KCqXOktXx+FYAQPGt9CaRVs8DBqQfpRMV0ZdBdvd1E7s5lCOECGqnERyAaEgxr0Gzw89M6TZVcJJJlVFUTEOIwPQSRQzEF1WCHlBqS4gw/cYDfFo8i8rK8uCRApKRAEUEVQoZrwYTcTGGVCNEVVKpRZ7Ry86bgA0Zz4g0KMVB7tTG5cCKRlvKqTVQz2t3Zz3V3LPNLPa3JkYHqHRCnmVPHQOjC6kGVQGnwwEJqU5M1K8mZ1y0RpqVNKqtCH0SjXLX7Zz2QJ5LCUOQzGQjBQ9vJUgQFsKSXNWMNKoIy2DUDqNNIRCwJjRSkOpE7MF9eJnkkXyXNR8OPGJOqYPCnJTZcfLNfgRDCUEJB5uTK6qG6CUTIYdQVA1ks0pR4jxQbCm8yrKJLJZ3FUECQTfzKkRB1TuTKzP+1/AhGgTqKpfQeWNFhpSEgVyqQLcmQyFU+YjECCEDKWnczZOHRJB7SQD5jCmJZWBqFlFRBUn9TvUABCIBYoYAIzQfGRwgfShBBcMUJOcMaLKBPEF2JDKBZNEYDNy3HYiTCKYdCdGUZYMLQYQVAaLFNFPIx8gCGnERFRZOIGGGgE7eJh2yqSVGQP/Z"
+                                            quality={80}
                                             loading={index === 0 && activeServiceTab === 'roofing' ? "eager" : "lazy"}
                                         />
                                     </div>
