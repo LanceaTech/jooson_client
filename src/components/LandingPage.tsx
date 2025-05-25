@@ -164,6 +164,7 @@ export default function LandingPage() {
     const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
     const [activeServiceTab, setActiveServiceTab] = useState<ServiceCategoryKey>('roofing');
     const [language, setLanguage] = useState<LanguageKey>('en');
+    const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
     // Define a type for your service categories keys
@@ -682,26 +683,6 @@ export default function LandingPage() {
         };
     }, []);
 
-    // Add this new useEffect for image preloading
-    useEffect(() => {
-        // Preload all service images when component mounts
-        const preloadImages = () => {
-            const allImages = Object.values(serviceCategories).flatMap(category =>
-                category.sections.map(section => section.image)
-            );
-
-            allImages.forEach(imageSrc => {
-                const img = new window.Image();
-                img.src = imageSrc;
-            });
-
-            log('Service images preloaded');
-        };
-
-        // Delay preloading slightly to not interfere with hero images
-        const preloadTimer = setTimeout(preloadImages, 1000);
-        return () => clearTimeout(preloadTimer);
-    }, [serviceCategories]);
 
     useEffect(() => {
         const slideInterval = setInterval(() => {
@@ -757,6 +738,50 @@ export default function LandingPage() {
         };
     }, []);
 
+    useEffect(() => {
+        const preloadCriticalImages = async () => {
+            const criticalImages = [
+                slides[0].image, // First hero image
+                slides[1]?.image, // Second hero image
+                // First service image for default tab
+                serviceCategories.roofing.sections[0]?.image
+            ].filter(Boolean);
+
+            const loadPromises = criticalImages.map(src => {
+                return new Promise((resolve) => {
+                    const img = new window.Image();
+                    img.onload = () => {
+                        setImagesLoaded(prev => ({ ...prev, [src]: true }));
+                        resolve(src);
+                    };
+                    img.onerror = () => resolve(src);
+                    img.src = src;
+                });
+            });
+
+            await Promise.all(loadPromises);
+            log('Critical images preloaded');
+        };
+
+        preloadCriticalImages();
+    }, [slides, serviceCategories]);
+
+    useEffect(() => {
+        const preloadTabImages = () => {
+            const tabImages = serviceCategories[activeServiceTab].sections.map(section => section.image);
+            
+            tabImages.forEach(imageSrc => {
+                if (!imagesLoaded[imageSrc]) {
+                    const img = new window.Image();
+                    img.onload = () => setImagesLoaded(prev => ({ ...prev, [imageSrc]: true }));
+                    img.src = imageSrc;
+                }
+            });
+        };
+
+        preloadTabImages();
+    }, [activeServiceTab, serviceCategories, imagesLoaded]);
+
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         log('Contact form submitted');
@@ -765,18 +790,12 @@ export default function LandingPage() {
             const form = e.currentTarget;
             const formData = new FormData(form);
 
-            // Convert FormData to URLSearchParams for Netlify
-            const params = new URLSearchParams();
-            formData.forEach((value, key) => {
-                params.append(key, value.toString());
-            });
+            // Ensure form-name is set correctly
+            formData.set('form-name', 'contact');
 
             const response = await fetch('/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: params.toString()
+                body: formData // Send FormData directly, not URLSearchParams
             });
 
             if (response.ok) {
@@ -796,24 +815,35 @@ export default function LandingPage() {
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             {/* Hero Section with Carousel */}
             <section className="relative h-screen text-white">
-                {/* Background Images - REPLACE THIS SECTION */}
+                {/* Background Images - REPLACE the existing hero image section */}
                 <div className="absolute inset-0">
                     {slides.map((slide, index) => (
                         <div
                             key={index}
-                            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+                            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+                                }`}
                         >
+                            {/* Loading placeholder */}
+                            {!imagesLoaded[slide.image] && (
+                                <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                </div>
+                            )}
+
                             <Image
                                 src={slide.image}
                                 alt={slide.title}
                                 fill
-                                className="object-cover opacity-70"
+                                className={`object-cover transition-opacity duration-500 ${imagesLoaded[slide.image] ? 'opacity-70' : 'opacity-0'
+                                    }`}
                                 priority={index === 0}
                                 placeholder="blur"
-                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQc..."
+                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                                 sizes="100vw"
-                                loading={index === 0 ? "eager" : "lazy"}
                                 quality={85}
+                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [slide.image]: true }))}
                             />
                             <div className="absolute inset-0 bg-black/40"></div>
                         </div>
@@ -992,17 +1022,23 @@ export default function LandingPage() {
                             <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
                                 <div className="w-full md:w-1/2">
                                     <div className="relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
+                                        {/* Loading placeholder for service images */}
+                                        {!imagesLoaded[service.image] && (
+                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                            </div>
+                                        )}
+
                                         <Image
                                             src={service.image}
                                             alt={service.title}
                                             fill
-                                            className="object-cover"
+                                            className={`object-cover transition-opacity duration-500 ${imagesLoaded[service.image] ? 'opacity-100' : 'opacity-0'
+                                                }`}
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                             priority={index === 0 && activeServiceTab === 'roofing'}
-                                            placeholder="blur"
-                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQc..."
                                             quality={80}
-                                            loading={index === 0 && activeServiceTab === 'roofing' ? "eager" : "lazy"}
+                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [service.image]: true }))}
                                         />
                                     </div>
                                 </div>
@@ -1124,7 +1160,6 @@ export default function LandingPage() {
                         <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 shadow-xl">
                             <form
                                 name="contact"
-                                method="POST"
                                 onSubmit={handleFormSubmit}
                                 className="space-y-6"
                                 data-netlify="true"
