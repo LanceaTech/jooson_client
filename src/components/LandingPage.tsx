@@ -682,6 +682,27 @@ export default function LandingPage() {
         };
     }, []);
 
+    // Add this new useEffect for image preloading
+    useEffect(() => {
+        // Preload all service images when component mounts
+        const preloadImages = () => {
+            const allImages = Object.values(serviceCategories).flatMap(category =>
+                category.sections.map(section => section.image)
+            );
+
+            allImages.forEach(imageSrc => {
+                const img = new window.Image();
+                img.src = imageSrc;
+            });
+
+            log('Service images preloaded');
+        };
+
+        // Delay preloading slightly to not interfere with hero images
+        const preloadTimer = setTimeout(preloadImages, 1000);
+        return () => clearTimeout(preloadTimer);
+    }, [serviceCategories]);
+
     useEffect(() => {
         const slideInterval = setInterval(() => {
             setCurrentSlide((prev) => {
@@ -741,30 +762,33 @@ export default function LandingPage() {
         log('Contact form submitted');
 
         try {
-            const formData = new FormData(e.currentTarget);
-            const data = Object.fromEntries(formData.entries());
+            const form = e.currentTarget;
+            const formData = new FormData(form);
 
-            // Add form-name to the data
-            data['form-name'] = 'contact';
+            // Convert FormData to URLSearchParams for Netlify
+            const params = new URLSearchParams();
+            formData.forEach((value, key) => {
+                params.append(key, value.toString());
+            });
 
-            // Send to Netlify
             const response = await fetch('/', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(data as Record<string, string>).toString()
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: params.toString()
             });
 
             if (response.ok) {
-                log('Form successfully submitted');
-                // Show success message to user
+                log('Form successfully submitted to Netlify');
+                alert('Thank you! Your message has been sent successfully.');
+                form.reset();
             } else {
-                throw new Error('Network response was not ok');
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
             }
         } catch (error) {
-            if (error instanceof Error) {
-                log(`Form submission error: ${error.message}`, 'error');
-            }
-            // Show error message to user
+            log(`Form submission error: ${error instanceof Error ? error.message : String(error)}`, 'error');
+            alert('Sorry, there was an error sending your message. Please try again or contact us directly.');
         }
     };
 
@@ -772,7 +796,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             {/* Hero Section with Carousel */}
             <section className="relative h-screen text-white">
-                {/* Background Images */}
+                {/* Background Images - REPLACE THIS SECTION */}
                 <div className="absolute inset-0">
                     {slides.map((slide, index) => (
                         <div
@@ -786,6 +810,10 @@ export default function LandingPage() {
                                 className="object-cover opacity-70"
                                 priority={index === 0}
                                 placeholder="blur"
+                                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQc..."
+                                sizes="100vw"
+                                loading={index === 0 ? "eager" : "lazy"}
+                                quality={85}
                             />
                             <div className="absolute inset-0 bg-black/40"></div>
                         </div>
@@ -970,7 +998,11 @@ export default function LandingPage() {
                                             fill
                                             className="object-cover"
                                             sizes="(max-width: 768px) 100vw, 50vw"
-                                            priority
+                                            priority={index === 0 && activeServiceTab === 'roofing'}
+                                            placeholder="blur"
+                                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQc..."
+                                            quality={80}
+                                            loading={index === 0 && activeServiceTab === 'roofing' ? "eager" : "lazy"}
                                         />
                                     </div>
                                 </div>
@@ -1096,14 +1128,15 @@ export default function LandingPage() {
                                 onSubmit={handleFormSubmit}
                                 className="space-y-6"
                                 data-netlify="true"
-                                netlify-honeypot="bot-field"
+                                data-netlify-honeypot="bot-field"
                             >
                                 <input type="hidden" name="form-name" value="contact" />
-                                <p className="hidden">
+                                <div style={{ display: 'none' }}>
                                     <label>
-                                        Don't fill this out if you're human: <input name="bot-field" />
+                                        Don't fill this out if you're human:
+                                        <input name="bot-field" tabIndex={-1} autoComplete="off" />
                                     </label>
-                                </p>
+                                </div>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium mb-2">{content[language].contact.form.name}</label>
