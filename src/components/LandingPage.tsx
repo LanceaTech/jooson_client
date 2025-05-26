@@ -1336,7 +1336,7 @@ export default function LandingPage() {
             </section>
 
             {/* WhatsApp Floating Button */}
-            <div className="fixed bottom-6 right-20 z-50">
+            <div className="fixed bottom-20 right-6 z-50">
                 <a
                     href="https://wa.me/6583830063?text=Thank%20you%20for%20contacting%20Joo%20Soon%20Metal%20Works,%20how%20may%20we%20help%20you%20today?"
                     target="_blank"
