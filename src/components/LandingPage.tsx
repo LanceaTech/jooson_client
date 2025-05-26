@@ -373,7 +373,7 @@ export default function LandingPage() {
                     emergency: "24/7 Emergency",
                     phone: "+65 6242 0412",
                     emailLabel: "Email Us",
-                    email: "info@joosoon.com.sg",
+                    email: "joosoonmetal@gmail.com",
                     location: "Service Area",
                     area: "Singapore & Greater Metro Area"
                 }
@@ -422,13 +422,13 @@ export default function LandingPage() {
             slides: [
                 {
                     title: "Joo Soon Metal Works",
-                    subtitle: "自2024年以来值得信赖的建筑合作伙伴",
+                    subtitle: "值得信赖的专业防水解决方案", // "Trusted Professional Waterproofing Solutions"
                     description: "为您的所有屋顶需求提供优质工艺、可靠服务和具有竞争力的价格。",
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
-                    title: "Joo Soon Metal Works",
-                    subtitle: "完整的屋顶解决方案",
+                    title: "Joo Soon Metal Works", 
+                    subtitle: "金属屋顶修复与保护专家", // "Metal Roof Restoration & Protection Specialists"
                     description: "从维修到全面更换，我们以专业技能处理住宅和商业屋顶项目。",
                     image: "/assets/images/hero/roofing-solutions.jpg"
                 }
@@ -608,14 +608,14 @@ export default function LandingPage() {
                     emergency: "24/7 紧急服务",
                     phone: "+65 6242 0412",
                     emailLabel: "发邮件给我们",
-                    email: "marketing@joosoon.com.sg",
+                    email: "joosoonmetal@gmail.com", // Corrected to match English version
                     location: "服务区域",
-                    area: "新加坡及大都市区"
+                    area: "新加坡全岛" // Changed from "新加坡及大都市区" to "Singapore Island-wide"
                 }
             },
             footer: {
-                companyName: "裕顺金属工程私人有限公司",
-                description: "裕顺金属工程专门为建筑维护问题提供专业解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供以下服务。",
+                companyName: "Joo Soon Metal Works", // Use English name as requested
+                description: "Joo Soon Metal Works专门为建筑维护问题提供专业解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供以下服务。",
                 quickLinks: {
                     title: "快速链接",
                     home: "首页",
@@ -641,16 +641,16 @@ export default function LandingPage() {
                 },
                 address: {
                     title: "地址",
-                    street: "新加坡天鹅湖大道7号 455706"
+                    street: "7 Swan Lake Ave, Singapore 455706" // Keep English street name (official practice in Singapore)
                 },
                 contactUs: {
                     title: "联系我们",
-                    phone: "电话号码",
+                    phone: "电话号码", 
                     phoneNumber: "+65 6242 0412",
                     email: "邮箱",
-                    emailAddress: "marketing@joosoon.com.sg"
+                    emailAddress: "joosoonmetal@gmail.com" // Corrected to match English version
                 },
-                copyright: "© 2024 裕顺金属工程私人有限公司。保留所有权利。"
+                copyright: "© 2024 Joo Soon Metal Works. 保留所有权利。" // Updated company name
             }
         }
     };
