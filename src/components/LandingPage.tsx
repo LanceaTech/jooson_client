@@ -1338,7 +1338,7 @@ export default function LandingPage() {
             {/* WhatsApp Floating Button */}
             <div className="fixed bottom-20 right-6 z-50">
                 <a
-                    href="https://wa.me/6583830063?text=I%20need%20a%20quotation%20for%20your%20services."
+                    href="https://wa.me/6597486325?text=I%20need%20a%20quotation%20for%20your%20services."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center group"
