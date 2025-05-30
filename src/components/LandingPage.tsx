@@ -34,6 +34,7 @@ interface ContentStructure {
         title: string;
         description1: string;
         description2: string;
+        image: string;
         stats: {
             experience: string;
             projects: string;
@@ -212,7 +213,7 @@ export default function LandingPage() {
                 title: "About Our Company",
                 description1: "With over 18 years of experience in the roofing and construction industry, we've built our reputation on quality workmanship, honest pricing, and exceptional customer service.",
                 description2: "Our team of skilled professionals is committed to delivering projects on time and within budget, whether it's a simple repair or a complete renovation.",
-
+                image: "/assets/images/hero/company.jpg",
                 stats: {
                     experience: "Years Experience",
                     projects: "Projects Completed",
@@ -449,6 +450,7 @@ export default function LandingPage() {
                 title: "关于我们的公司",
                 description1: "凭借18年在屋顶和建筑行业的经验，我们以优质工艺、诚实定价和卓越客户服务建立了声誉。",
                 description2: "我们的专业团队致力于按时、按预算交付项目，无论是简单的维修还是完整的改造。",
+                image: "/assets/images/hero/company.jpg",
                 stats: {
                     experience: "年经验",
                     projects: "完成项目",
@@ -980,21 +982,22 @@ export default function LandingPage() {
 
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
                             {/* Loading placeholder */}
-                            {!imagesLoaded["/assets/images/about/company.jpg"] && (
-                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                </div>
-                            )}
+                            {!imagesLoaded[about.image] && (
+                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                            </div>
+                                        )}
 
                             <Image
-                                src="/assets/images/about/company-team.jpg"
-                                alt="Joo Soon Metal Works team at work"
+                                src={content[language].about.image}
+                                alt={content[language].about.title}
                                 fill
-                                className={`object-cover transition-opacity duration-500 ${imagesLoaded["/assets/images/about/company.jpg"] ? 'opacity-100' : 'opacity-0'
+                                className={`object-cover transition-opacity duration-500 ${imagesLoaded[about.image] ? 'opacity-100' : 'opacity-0'
                                     }`}
                                 sizes="(max-width: 768px) 100vw, 50vw"
+                                priority={index === 0 && activeServiceTab === 'roofing'}
                                 quality={80}
-                                onLoad={() => setImagesLoaded(prev => ({ ...prev, ["/assets/images/about/company.jpg"]: true }))}
+                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [about.image]: true }))}
                             />
                         </div>
                     </div>
