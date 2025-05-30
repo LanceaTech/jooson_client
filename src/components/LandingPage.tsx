@@ -950,7 +950,6 @@ export default function LandingPage() {
                 ref={(el) => {
                     sectionRefs.current.about = el;
                 }}
-
                 className="py-20 bg-white"
             >
                 <div className="container mx-auto px-4">
@@ -982,22 +981,22 @@ export default function LandingPage() {
 
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
                             {/* Loading placeholder */}
-                            {!imagesLoaded[about.image] && (
-                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                            </div>
-                                        )}
+                            {!imagesLoaded[content[language].about.image] && (
+                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                </div>
+                            )}
 
                             <Image
                                 src={content[language].about.image}
                                 alt={content[language].about.title}
                                 fill
-                                className={`object-cover transition-opacity duration-500 ${imagesLoaded[about.image] ? 'opacity-100' : 'opacity-0'
+                                className={`object-cover transition-opacity duration-500 ${imagesLoaded[content[language].about.image] ? 'opacity-100' : 'opacity-0'
                                     }`}
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                priority={index === 0 && activeServiceTab === 'roofing'}
+                                priority={false}
                                 quality={80}
-                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [about.image]: true }))}
+                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [content[language].about.image]: true }))}
                             />
                         </div>
                     </div>
