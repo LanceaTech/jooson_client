@@ -610,12 +610,12 @@ export default function LandingPage() {
                     submit: "发送信息"
                 },
                 info: {
-                    emergency: "24/7 紧急服务",
+                    emergency: "联系我们",
                     phone: "+65 9226 7756",
                     emailLabel: "发邮件给我们",
                     email: "joosoonmetal@gmail.com",
-                    location: "服务区域",
-                    area: "新加坡全岛"
+                    location: "地址",
+                    area: "7 Mandai Link, Mandai Connection, #03-05, Singapore 728653"
                 }
             },
             footer: {
