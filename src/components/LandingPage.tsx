@@ -138,6 +138,7 @@ interface ContentStructure {
             metalWorks: string;
             puGrouting: string;
             floorCoating: string;
+            windowSealant: string;
         };
         address: {
             title: string;
@@ -209,8 +210,9 @@ export default function LandingPage() {
             },
             about: {
                 title: "About Our Company",
-                description1: "With years of experience in the roofing and construction industry, we've built our reputation on quality workmanship, honest pricing, and exceptional customer service.",
+                description1: "With over 18 years of experience in the roofing and construction industry, we've built our reputation on quality workmanship, honest pricing, and exceptional customer service.",
                 description2: "Our team of skilled professionals is committed to delivering projects on time and within budget, whether it's a simple repair or a complete renovation.",
+
                 stats: {
                     experience: "Years Experience",
                     projects: "Projects Completed",
@@ -370,12 +372,12 @@ export default function LandingPage() {
                     submit: "Send Message"
                 },
                 info: {
-                    emergency: "24/7 Emergency",
-                    phone: "+65 6242 0412",
+                    emergency: "Contact Us",
+                    phone: "+65 9226 7756",
                     emailLabel: "Email Us",
                     email: "joosoonmetal@gmail.com",
-                    location: "Service Area",
-                    area: "Singapore & Greater Metro Area"
+                    location: "Address",
+                    area: "7 Mandai Link, Mandai Connection, #03-05, Singapore 728653",
                 }
             },
             footer: {
@@ -402,18 +404,19 @@ export default function LandingPage() {
                     rustproofing: "Rustproofing and waterproofing to metal roofs",
                     metalWorks: "Other related metal roof works: replacement of roofing sheets, skylights, gutters, flashing, capping, downpipes, etc",
                     puGrouting: "PU grouting and repair to spalling concrete",
-                    floorCoating: "Floor Coating, Window Sealant, Façade Cleaning"
+                    floorCoating: "Factory and carpark floor coating, Window Sealant, Façade Cleaning",
+                    windowSealant: "External window and cladding sealant works"
                 },
                 address: {
                     title: "Address",
-                    street: "7 Swan Lake Ave, Singapore 455706"
+                    street: "7 Mandai Link #03-05 Mandai Connection, Singapore 728653"
                 },
                 contactUs: {
                     title: "Contact us",
                     phone: "Phone number",
-                    phoneNumber: "+65 6242 0412",
+                    phoneNumber: "+65 9226 7756",
                     email: "Email",
-                    emailAddress: "marketing@joosoon.com.sg"
+                    emailAddress: "joosoonmetal@gmail.com"
                 },
                 copyright: "© 2024 Joo Soon Metal Works Pte. Ltd. All rights reserved."
             }
@@ -427,7 +430,7 @@ export default function LandingPage() {
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
-                    title: "Joo Soon Metal Works", 
+                    title: "Joo Soon Metal Works",
                     subtitle: "金属屋顶修复与保护专家", // "Metal Roof Restoration & Protection Specialists"
                     description: "从维修到全面更换，我们以专业技能处理住宅和商业屋顶项目。",
                     image: "/assets/images/hero/roofing-solutions.jpg"
@@ -444,7 +447,7 @@ export default function LandingPage() {
             },
             about: {
                 title: "关于我们的公司",
-                description1: "凭借多年在屋顶和建筑行业的经验，我们以优质工艺、诚实定价和卓越客户服务建立了声誉。",
+                description1: "凭借18年在屋顶和建筑行业的经验，我们以优质工艺、诚实定价和卓越客户服务建立了声誉。",
                 description2: "我们的专业团队致力于按时、按预算交付项目，无论是简单的维修还是完整的改造。",
                 stats: {
                     experience: "年经验",
@@ -606,15 +609,15 @@ export default function LandingPage() {
                 },
                 info: {
                     emergency: "24/7 紧急服务",
-                    phone: "+65 6242 0412",
+                    phone: "+65 9226 7756",
                     emailLabel: "发邮件给我们",
-                    email: "joosoonmetal@gmail.com", // Corrected to match English version
+                    email: "joosoonmetal@gmail.com",
                     location: "服务区域",
-                    area: "新加坡全岛" // Changed from "新加坡及大都市区" to "Singapore Island-wide"
+                    area: "新加坡全岛"
                 }
             },
             footer: {
-                companyName: "Joo Soon Metal Works", // Use English name as requested
+                companyName: "Joo Soon Metal Works",
                 description: "Joo Soon Metal Works专门为建筑维护问题提供专业解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供以下服务。",
                 quickLinks: {
                     title: "快速链接",
@@ -637,20 +640,21 @@ export default function LandingPage() {
                     rustproofing: "金属屋顶的防锈和防水",
                     metalWorks: "其他相关金属屋顶工程：更换屋顶板、天窗、排水沟、闪光、封盖、落水管等",
                     puGrouting: "PU灌浆和剥落混凝土修复",
-                    floorCoating: "地面涂层、窗户密封剂、外墙清洁"
+                    floorCoating: "工厂和停车场地面涂层、窗户密封剂、外墙清洁",
+                    windowSealant: "外窗和包层密封工程"
                 },
                 address: {
                     title: "地址",
-                    street: "7 Swan Lake Ave, Singapore 455706" // Keep English street name (official practice in Singapore)
+                    street: "7 Mandai Link #03-05 Mandai Connection, Singapore 728653"
                 },
                 contactUs: {
                     title: "联系我们",
-                    phone: "电话号码", 
-                    phoneNumber: "+65 6242 0412",
+                    phone: "电话号码",
+                    phoneNumber: "+65 9226 7756",
                     email: "邮箱",
-                    emailAddress: "joosoonmetal@gmail.com" // Corrected to match English version
+                    emailAddress: "joosoonmetal@gmail.com"
                 },
-                copyright: "© 2024 Joo Soon Metal Works. 保留所有权利。" // Updated company name
+                copyright: "© 2024 Joo Soon Metal Works. 保留所有权利。"
             }
         }
     };
@@ -973,13 +977,25 @@ export default function LandingPage() {
                                 </div>
                             </div>
                         </div>
+
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
-                            <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                                <div className="text-center">
-                                    <div className="text-6xl mb-4">🏠</div>
-                                    <p>Company Image Placeholder</p>
+                            {/* Loading placeholder */}
+                            {!imagesLoaded["/assets/images/about/company.jpg"] && (
+                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
                                 </div>
-                            </div>
+                            )}
+
+                            <Image
+                                src="/assets/images/about/company-team.jpg"
+                                alt="Joo Soon Metal Works team at work"
+                                fill
+                                className={`object-cover transition-opacity duration-500 ${imagesLoaded["/assets/images/about/company.jpg"] ? 'opacity-100' : 'opacity-0'
+                                    }`}
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                quality={80}
+                                onLoad={() => setImagesLoaded(prev => ({ ...prev, ["/assets/images/about/company.jpg"]: true }))}
+                            />
                         </div>
                     </div>
                 </div>
@@ -1338,7 +1354,7 @@ export default function LandingPage() {
             {/* WhatsApp Floating Button */}
             <div className="fixed bottom-20 right-6 z-50">
                 <a
-                    href="https://wa.me/6597486325?text=I%20need%20a%20quotation%20for%20your%20services."
+                    href="https://wa.me/6592267756?text=I%20need%20a%20quotation%20for%20your%20services."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center group"
@@ -1454,43 +1470,44 @@ export default function LandingPage() {
                                         <p className="text-sm text-gray-400">{content[language].footer.address.street}</p>
                                     </div>
                                 </div>
+
                                 <div className="flex items-start space-x-3">
                                     <Phone className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
                                     <div>
-                                        <p className="text-sm font-medium text-gray-200">{content[language].footer.contactUs.phone}</p>
-                                        <a href="tel:+6562420412" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.contactUs.phoneNumber}</a>
+                                        <p className="text-sm font-medium text-gray-200">Andy Ko</p>
+                                        <a href="tel:+6597307219" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">+65 9730 7219</a>
                                     </div>
                                 </div>
-                                <div className="flex items-start space-x-3">
-                                    <Mail className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                <div className="flex items-start space-x-2">
+                                    <Phone className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
                                     <div>
-                                        <p className="text-sm font-medium text-gray-200">{content[language].footer.contactUs.email}</p>
-                                        <a href="mailto:marketing@joosoon.com.sg" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.contactUs.emailAddress}</a>
+                                        <p className="text-sm font-medium text-gray-200">Ivy</p>
+                                        <a href="tel:+6592267756" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">+65 9226 7756</a>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Quick Links */}
-                            <div className="mt-8">
-                                <h4 className="font-bold text-sm mb-3 text-gray-300">{content[language].footer.quickLinks.title}</h4>
-                                <div className="grid grid-cols-2 gap-2">
-                                    <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.home}</a>
-                                    <a href="#about" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.about}</a>
-                                    <a href="#services" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.services}</a>
-                                    <a href="#contact" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.contact}</a>
+                                {/* Quick Links */}
+                                <div className="mt-8">
+                                    <h4 className="font-bold text-sm mb-3 text-gray-300">{content[language].footer.quickLinks.title}</h4>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.home}</a>
+                                        <a href="#about" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.about}</a>
+                                        <a href="#services" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.services}</a>
+                                        <a href="#contact" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">{content[language].footer.quickLinks.contact}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Bottom Bar */}
-                    <div className="border-t border-gray-700 pt-8">
-                        <div className="flex flex-col md:flex-row justify-between items-center">
-                            <p className="text-sm text-gray-400 mb-4 md:mb-0">{content[language].footer.copyright}</p>
-                            <div className="flex items-center space-x-4">
-                                <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</a>
-                                <span className="text-gray-600">|</span>
-                                <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</a>
+                        {/* Bottom Bar */}
+                        <div className="border-t border-gray-700 pt-8">
+                            <div className="flex flex-col md:flex-row justify-between items-center">
+                                <p className="text-sm text-gray-400 mb-4 md:mb-0">{content[language].footer.copyright}</p>
+                                <div className="flex items-center space-x-4">
+                                    <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</a>
+                                    <span className="text-gray-600">|</span>
+                                    <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</a>
+                                </div>
                             </div>
                         </div>
                     </div>
