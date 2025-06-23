@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Phone, Mail, MapPin, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { Inter } from 'next/font/google';
+
 import { useForm, ValidationError } from '@formspree/react';
 
 const inter = Inter({
@@ -188,13 +189,13 @@ export default function LandingPage() {
         en: {
             slides: [
                 {
-                    title: "Joo Soon Metal Works",
+                    title: "Joo Soon Metal Works Pte Ltd",
                     subtitle: "Professional Waterproofing Solutions",
                     description: "Comprehensive waterproofing protection for all roof types and wet areas, ensuring long-lasting defense against water damage with advanced membrane systems.",
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
-                    title: "Joo Soon Metal Works",
+                    title: "Joo Soon Metal Works Pte Ltd",
                     subtitle: "Metal Roof Restoration & Protection",
                     description: "Specialized rustproofing and waterproofing services to extend the life of metal roofing systems. From rust treatment to protective coatings, we ensure your roof stands the test of time.",
                     image: "/assets/images/hero/roofing-solutions.jpg"
@@ -235,7 +236,7 @@ export default function LandingPage() {
                                     "Flat roof waterproofing with bituminous or liquid membranes",
                                     "Sloped roof protection with underlayment and flashing systems",
                                     "Concrete roof treatments using crystalline or acrylic coatings",
-                                    "Wet area waterproofing for bathrooms and balconies",
+                                    // "Wet area waterproofing for bathrooms and balconies",
                                     "Cementitious and liquid-applied membrane solutions"
                                 ]
                             },
@@ -374,7 +375,7 @@ export default function LandingPage() {
                 },
                 info: {
                     emergency: "Contact Us",
-                    phone: "+65 9226 7756",
+                    phone: "+65 9730 7219",
                     emailLabel: "Email Us",
                     email: "joosoonmetal@gmail.com",
                     location: "Address",
@@ -382,7 +383,7 @@ export default function LandingPage() {
                 }
             },
             footer: {
-                companyName: "JOO SOON METAL WORKS PTE. LTD.",
+                companyName: "Joo Soon Metal Works Pte Ltd",
                 description: "Joo Soon Metal Works specializes in providing professional solutions to building maintenance problems. We provide the following services for private condominiums, commercial and industrial buildings, hotels and government facilities.",
                 quickLinks: {
                     title: "Quick Links",
@@ -399,7 +400,7 @@ export default function LandingPage() {
                 },
                 servicesSection: {
                     title: "Services",
-                    waterproofing: "Waterproofing to different types of roofs and wet areas",
+                    waterproofing: "Waterproofing to different types of roofs",
                     wallCoating: "Wall waterproof coating to plastered, tiled or brick surface",
                     repainting: "Repainting to external wall",
                     rustproofing: "Rustproofing and waterproofing to metal roofs",
@@ -425,13 +426,13 @@ export default function LandingPage() {
         zh: {
             slides: [
                 {
-                    title: "Joo Soon Metal Works",
+                    title: "Joo Soon Metal Works Pte Ltd",
                     subtitle: "值得信赖的专业防水解决方案", // "Trusted Professional Waterproofing Solutions"
                     description: "为您的所有屋顶需求提供优质工艺、可靠服务和具有竞争力的价格。",
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
-                    title: "Joo Soon Metal Works",
+                    title: "Joo Soon Metal Works Pte Ltd",
                     subtitle: "金属屋顶修复与保护专家", // "Metal Roof Restoration & Protection Specialists"
                     description: "从维修到全面更换，我们以专业技能处理住宅和商业屋顶项目。",
                     image: "/assets/images/hero/roofing-solutions.jpg"
@@ -472,7 +473,7 @@ export default function LandingPage() {
                                     "使用沥青或液体膜的平屋顶防水",
                                     "使用底层和闪光系统的斜屋顶保护",
                                     "使用结晶或丙烯酸涂层的混凝土屋顶处理",
-                                    "浴室和阳台等潮湿区域防水",
+                                    // "浴室和阳台等潮湿区域防水",
                                     "水泥基和液体施工膜解决方案"
                                 ]
                             },
@@ -611,15 +612,16 @@ export default function LandingPage() {
                 },
                 info: {
                     emergency: "联系我们",
-                    phone: "+65 9226 7756",
+                    phone: "+65 9730 7219",
                     emailLabel: "发邮件给我们",
                     email: "joosoonmetal@gmail.com",
                     location: "地址",
                     area: "7 Mandai Link, Mandai Connection, #03-05, Singapore 728653"
                 }
             },
+
             footer: {
-                companyName: "Joo Soon Metal Works",
+                companyName: "Joo Soon Metal Works Pte Ltd",
                 description: "Joo Soon Metal Works专门为建筑维护问题提供专业解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供以下服务。",
                 quickLinks: {
                     title: "快速链接",
@@ -636,7 +638,7 @@ export default function LandingPage() {
                 },
                 servicesSection: {
                     title: "服务",
-                    waterproofing: "不同类型屋顶和潮湿区域的防水",
+                    waterproofing: "不同类型屋顶的防水",
                     wallCoating: "抹灰、瓷砖或砖面的墙体防水涂层",
                     repainting: "外墙重新涂装",
                     rustproofing: "金属屋顶的防锈和防水",
@@ -880,9 +882,10 @@ export default function LandingPage() {
                                             {/* Desktop Layout - Left Aligned with Gradient Background */}
                                             <div className="hidden md:block">
                                                 <div className="inline-block bg-gradient-to-r from-black/70 to-transparent p-6 rounded-lg max-w-2xl">
-                                                    <h1 className="text-4xl md:text-6xl font-bold pb-2 leading-tight whitespace-nowrap">
+                                                    <h1 className="text-3xl md:text-5xl font-bold pb-2 leading-tight whitespace-nowrap">
                                                         {slide.title}
                                                     </h1>
+
                                                     <h2 className="text-xl md:text-2xl text-orange-300 mb-4">
                                                         {slide.subtitle}
                                                     </h2>
@@ -894,7 +897,7 @@ export default function LandingPage() {
 
                                             {/* Mobile Layout - Centered */}
                                             <div className="md:hidden text-center">
-                                                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 pb-2 leading-tight">
+                                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 pb-2 leading-tight">
                                                     {slide.title}
                                                 </h1>
                                                 <h2 className="text-xl text-orange-300 mb-4">
