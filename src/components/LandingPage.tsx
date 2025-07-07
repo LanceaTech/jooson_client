@@ -755,7 +755,7 @@ export default function LandingPage() {
                             {!imagesLoaded[slide.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                        <div className="w-16 h-16 border-4.border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                                     </div>
                                 </div>
                             )}
@@ -824,7 +824,7 @@ export default function LandingPage() {
                                                         const contactSection = document.getElementById('contact');
                                                         contactSection?.scrollIntoView({ behavior: 'smooth' });
                                                     }}
-                                                    className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all hover:scale-105 shadow-lg"
+                                                    className="bg-blue-600.hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all hover:scale-105 shadow-lg"
                                                 >
                                                     {content[language].hero.cta}
                                                 </button>
@@ -839,7 +839,7 @@ export default function LandingPage() {
                                     <button
                                         key={index}
                                         onClick={() => setCurrentSlide(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-blue-500 w-8' : 'bg-white/50'
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-blue-600 w-8' : 'bg-white/50'
                                             }`}
                                         aria-label={`Go to slide ${index + 1}`}
                                     />
@@ -894,7 +894,7 @@ export default function LandingPage() {
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
                             {!imagesLoaded[content[language].about.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                    <div className="w-12 h-12 border-4.border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                                 </div>
                             )}
 
@@ -944,7 +944,7 @@ export default function LandingPage() {
                                             onClick={() => setActiveServiceTab(key)}
                                             className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 text-center ${
                                                 activeServiceTab === key
-                                                    ? 'bg-blue-500 text-white shadow-md'
+                                                    ? 'bg-blue-600 text-white shadow-md'
                                                     : 'bg-white text-gray-600 hover:text-blue-500 hover:bg-blue-50 shadow-sm'
                                             }`}
                                         >
@@ -964,7 +964,7 @@ export default function LandingPage() {
                                             onClick={() => setActiveServiceTab(key)}
                                             className={`px-6 py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap ${
                                                 activeServiceTab === key
-                                                    ? 'bg-blue-500 text-white shadow-md'
+                                                    ? 'bg-blue-600 text-white shadow-md'
                                                     : 'text-gray-600 hover:text-blue-500 hover:bg-blue-50'
                                             }`}
                                         >
@@ -988,7 +988,7 @@ export default function LandingPage() {
                                     >
                                         {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                             <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                                <div className="w-12 h-12 border-4.border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                                             </div>
                                         )}
                                         <Image
@@ -1102,7 +1102,7 @@ export default function LandingPage() {
                                             >
                                                 {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                                     <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                                        <div className="w-12 h-12 border-4.border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                                                     </div>
                                                 )}
                                                 <Image
@@ -1457,7 +1457,7 @@ export default function LandingPage() {
                                             id="name"
                                             name="name"
                                             required
-                                            className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                            className="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
                                             placeholder={content[language].contact.form.namePlaceholder}
                                         />
                                         <ValidationError
@@ -1573,7 +1573,7 @@ export default function LandingPage() {
                                         disabled={state.submitting}
                                         className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all transform shadow-lg ${state.submitting
                                             ? 'bg-gray-500 cursor-not-allowed'
-                                            : 'bg-blue-500 hover:bg-blue-600 hover:scale-105'
+                                            : 'bg-blue-600.hover:bg-blue-700 hover:scale-105'
                                             } text-white`}
                                     >
                                         {state.submitting ? 'Sending...' : content[language].contact.form.submit}
@@ -1612,7 +1612,7 @@ export default function LandingPage() {
                         {/* Company Section */}
                         <div className="md:col-span-1">
                             <div className="flex items-center mb-6">
-                                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                                <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
                                     <span className="text-white font-bold text-xl">JS</span>
                                 </div>
                                 <div>
@@ -1623,16 +1623,16 @@ export default function LandingPage() {
                                 {content[language].footer.description}
                             </p>
                             <div className="flex space-x-3">
-                                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-all">
+                                <a href="#" className="w-10 h-10 bg-white/10.hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
                                 </a>
-                                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-all">
+                                <a href="#" className="w-10 h-10 bg-white/10.hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z" /></svg>
                                 </a>
-                                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-all">
+                                <a href="#" className="w-10 h-10 bg-white/10.hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
                                 </a>
-                                <a href="#" className="w-10 h-10 bg-white/10 hover:bg-blue-500 rounded-lg flex items-center justify-center transition-all">
+                                <a href="#" className="w-10 h-10 bg-white/10.hover:bg-blue-700 rounded-lg flex items-center justify-center transition-all">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" /></svg>
                                 </a>
                             </div>
@@ -1764,7 +1764,7 @@ export default function LandingPage() {
                         setLanguage(language === 'en' ? 'zh' : 'en');
                         log(`Language switched to: ${language === 'en' ? 'Chinese' : 'English'}`);
                     }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2 font-medium"
+                    className="bg-blue-600.hover:bg-blue-700 text-white px-4 py-2 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2 font-medium"
                 >
                     <span className="text-sm">{language === 'en' ? '中文' : 'EN'}</span>
                     <div className="w-1 h-1 bg-white rounded-full"></div>
