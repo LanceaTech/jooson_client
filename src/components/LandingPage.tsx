@@ -1140,50 +1140,211 @@ export default function LandingPage() {
                                                     ? 'grid-cols-3'
                                                     : 'grid-cols-3'
                                             }`}>
-                                                {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
-                                                    <div 
-                                                        key={index}
-                                                        className={`relative bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer ${
-                                                            serviceCategories[activeServiceTab].galleryImages.length <= 3
-                                                                ? 'h-48'
-                                                                : serviceCategories[activeServiceTab].galleryImages.length === 4
-                                                                ? 'h-52'
-                                                                : serviceCategories[activeServiceTab].galleryImages.length === 5 && index >= 3
-                                                                ? 'col-span-3 h-40'
-                                                                : 'h-48'
-                                                        }`}
-                                                        onClick={() => setModalImage(image)}
-                                                    >
-                                                        {!imagesLoaded[image] && (
-                                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
-                                                        )}
-                                                        <Image
-                                                            src={image}
-                                                            alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
-                                                            fill
-                                                            className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                                                                imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                {serviceCategories[activeServiceTab].galleryImages.map((image, index) => {
+                                                    const totalImages = serviceCategories[activeServiceTab].galleryImages.length;
+                                                    
+                                                    // Special handling for 5 images: last 2 should span full width
+                                                    if (totalImages === 5 && index >= 3) {
+                                                        return (
+                                                            <div 
+                                                                key={index}
+                                                                className="col-span-3 relative h-40 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                                onClick={() => setModalImage(image)}
+                                                            >
+                                                                {!imagesLoaded[image] && (
+                                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                                )}
+                                                                <Image
+                                                                    src={image}
+                                                                    alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                                    fill
+                                                                    className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                        imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                                    }`}
+                                                                    sizes="100vw"
+                                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                                />
+                                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                    <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                        <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                        </svg>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    
+                                                    // Special handling for 6 images: create 2x2 grid for bottom 4 images
+                                                    if (totalImages === 6) {
+                                                        if (index < 3) {
+                                                            // First 3 images in top row
+                                                            return (
+                                                                <div 
+                                                                    key={index}
+                                                                    className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                                    onClick={() => setModalImage(image)}
+                                                                >
+                                                                    {!imagesLoaded[image] && (
+                                                                        <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                                    )}
+                                                                    <Image
+                                                                        src={image}
+                                                                        alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                                        fill
+                                                                        className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                            imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                                        }`}
+                                                                        sizes="33vw"
+                                                                        onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                                    />
+                                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                        <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        } else if (index === 3) {
+                                                            // Start new row for last 3 images, but with 2 columns for the first 2
+                                                            return (
+                                                                <React.Fragment key={`row-${index}`}>
+                                                                    <div className="col-span-3 grid grid-cols-2 gap-4">
+                                                                        <div 
+                                                                            className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                                            onClick={() => setModalImage(image)}
+                                                                        >
+                                                                            {!imagesLoaded[image] && (
+                                                                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                                            )}
+                                                                            <Image
+                                                                                src={image}
+                                                                                alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                                                fill
+                                                                                className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                                    imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                                                }`}
+                                                                                sizes="50vw"
+                                                                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                                            />
+                                                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                                <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                                    <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                                    </svg>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        {serviceCategories[activeServiceTab].galleryImages[4] && (
+                                                                            <div 
+                                                                                className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                                                onClick={() => setModalImage(serviceCategories[activeServiceTab].galleryImages[4])}
+                                                                            >
+                                                                                {!imagesLoaded[serviceCategories[activeServiceTab].galleryImages[4]] && (
+                                                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                                                )}
+                                                                                <Image
+                                                                                    src={serviceCategories[activeServiceTab].galleryImages[4]}
+                                                                                    alt={`${serviceCategories[activeServiceTab].title} 5`}
+                                                                                    fill
+                                                                                    className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                                        imagesLoaded[serviceCategories[activeServiceTab].galleryImages[4]] ? 'opacity-100' : 'opacity-0'
+                                                                                    }`}
+                                                                                    sizes="50vw"
+                                                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].galleryImages[4]]: true }))}
+                                                                                />
+                                                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                                    <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                                        <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                                        </svg>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                </React.Fragment>
+                                                            );
+                                                        } else if (index === 5) {
+                                                            // Last image spans full width
+                                                            return (
+                                                                <div 
+                                                                    key={index}
+                                                                    className="col-span-3 relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                                    onClick={() => setModalImage(image)}
+                                                                >
+                                                                    {!imagesLoaded[image] && (
+                                                                        <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                                    )}
+                                                                    <Image
+                                                                        src={image}
+                                                                        alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                                        fill
+                                                                        className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                            imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                                        }`}
+                                                                        sizes="100vw"
+                                                                        onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                                    />
+                                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                        <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                            </svg>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        }
+                                                        // Skip rendering index 4 since it's handled in index 3
+                                                        return null;
+                                                    }
+                                                    
+                                                    // Default case for other image counts
+                                                    return (
+                                                        <div 
+                                                            key={index}
+                                                            className={`relative bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer ${
+                                                                totalImages <= 3
+                                                                    ? 'h-48'
+                                                                    : totalImages === 4
+                                                                    ? 'h-52'
+                                                                    : 'h-48'
                                                             }`}
-                                                            sizes={
-                                                                serviceCategories[activeServiceTab].galleryImages.length <= 3
-                                                                    ? '33vw'
-                                                                    : serviceCategories[activeServiceTab].galleryImages.length === 4
-                                                                    ? '50vw'
-                                                                    : serviceCategories[activeServiceTab].galleryImages.length === 5 && index >= 3
-                                                                    ? '100vw'
-                                                                    : '33vw'
-                                                            }
-                                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                            <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
-                                                                <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                </svg>
+                                                            onClick={() => setModalImage(image)}
+                                                        >
+                                                            {!imagesLoaded[image] && (
+                                                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                            )}
+                                                            <Image
+                                                                src={image}
+                                                                alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                                fill
+                                                                className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                                    imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                                }`}
+                                                                sizes={
+                                                                    totalImages <= 3
+                                                                        ? '33vw'
+                                                                        : totalImages === 4
+                                                                        ? '50vw'
+                                                                        : '33vw'
+                                                                }
+                                                                onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                            />
+                                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                                <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
+                                                                    <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                                    </svg>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                ))}
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     </div>
