@@ -166,6 +166,7 @@ export default function LandingPage() {
     const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
     const [state, handleSubmit] = useForm("mblovkgv");
+    const [modalImage, setModalImage] = useState<string | null>(null);
 
     // Define service categories keys for roof services only
     type ServiceCategoryKey = 'canopy' | 'metalRoof' | 'gutter' | 'downpipe';
@@ -891,7 +892,7 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Services Section with Enhanced Layout */}
+            {/* Services Section with Image Modal */}
             <section
                 id="services"
                 ref={(el) => {
@@ -909,7 +910,7 @@ export default function LandingPage() {
                         </p>
                     </div>
 
-                    {/* Service Tabs - Scrollable on mobile */}
+                    {/* Service Tabs */}
                     <div className="flex justify-center md:justify-start mb-8 md:mb-12 px-2">
                         <div className="bg-white rounded-xl p-1 shadow-lg inline-flex max-w-full overflow-x-auto">
                             {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
@@ -918,8 +919,8 @@ export default function LandingPage() {
                                         key={key}
                                         onClick={() => setActiveServiceTab(key)}
                                         className={`px-4 py-3 md:px-6 md:py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap min-w-max ${activeServiceTab === key
-                                            ? 'bg-orange-500 text-white shadow-md'
-                                            : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
+                                                ? 'bg-orange-500 text-white shadow-md'
+                                                : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
                                             }`}
                                     >
                                         {category.title}
@@ -928,14 +929,17 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    {/* Service Content with Enhanced Layout */}
+                    {/* Service Content */}
                     <div className={`transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         {serviceCategories[activeServiceTab] && (
                             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-                                {/* Mobile Layout - Stack vertically */}
+                                {/* Mobile Layout */}
                                 <div className="block md:hidden">
-                                    {/* Main Image - Larger on mobile */}
-                                    <div className="relative h-80 w-full overflow-hidden group">
+                                    {/* Main Image - Clickable */}
+                                    <div
+                                        className="relative h-80 w-full overflow-hidden group cursor-pointer"
+                                        onClick={() => setModalImage(serviceCategories[activeServiceTab].mainImage)}
+                                    >
                                         {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                             <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
                                                 <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
@@ -945,15 +949,20 @@ export default function LandingPage() {
                                             src={serviceCategories[activeServiceTab].mainImage}
                                             alt={serviceCategories[activeServiceTab].title}
                                             fill
-                                            className={`object-cover transition-all duration-500 group-hover:scale-110 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
+                                            className={`object-cover transition-all duration-500 group-hover:scale-105 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
                                                 }`}
                                             sizes="100vw"
                                             onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
                                         />
-                                        {/* Hover overlay */}
+                                        {/* Click to view overlay */}
                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                             <div className="bg-white/90 backdrop-blur-sm rounded-lg px-4 py-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                                <p className="text-gray-800 font-semibold">View Full Image</p>
+                                                <p className="text-gray-800 font-semibold flex items-center gap-2">
+                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                    </svg>
+                                                    Click to enlarge
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -980,10 +989,14 @@ export default function LandingPage() {
                                         </button>
                                     </div>
 
-                                    {/* Gallery Images - Larger on mobile */}
+                                    {/* Gallery Images - Clickable */}
                                     <div className="grid grid-cols-2 gap-3 p-6 pt-0">
                                         {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
-                                            <div key={index} className="relative h-32 bg-gray-200 rounded-lg overflow-hidden group cursor-pointer">
+                                            <div
+                                                key={index}
+                                                className="relative h-32 bg-gray-200 rounded-lg overflow-hidden group cursor-pointer"
+                                                onClick={() => setModalImage(image)}
+                                            >
                                                 {!imagesLoaded[image] && (
                                                     <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
                                                 )}
@@ -991,16 +1004,16 @@ export default function LandingPage() {
                                                     src={image}
                                                     alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
                                                     fill
-                                                    className={`object-cover transition-all duration-500 group-hover:scale-110 ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                    className={`object-cover transition-all duration-500 group-hover:scale-105 ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
                                                         }`}
                                                     sizes="50vw"
                                                     onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
                                                 />
-                                                {/* Hover overlay */}
+                                                {/* Click overlay */}
                                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                                     <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 transform scale-75 group-hover:scale-100 transition-transform duration-300">
                                                         <svg className="w-4 h-4 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                         </svg>
                                                     </div>
                                                 </div>
@@ -1009,12 +1022,15 @@ export default function LandingPage() {
                                     </div>
                                 </div>
 
-                                {/* Desktop Layout - Side by side with larger images */}
+                                {/* Desktop Layout */}
                                 <div className="hidden md:block">
                                     <div className="grid md:grid-cols-2 gap-8 p-8">
-                                        {/* Left Side - Main Image - Larger */}
+                                        {/* Left Side - Main Image - Clickable */}
                                         <div className="space-y-6">
-                                            <div className="relative h-96 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer">
+                                            <div
+                                                className="relative h-96 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                                                onClick={() => setModalImage(serviceCategories[activeServiceTab].mainImage)}
+                                            >
                                                 {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                                     <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
                                                         <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
@@ -1024,19 +1040,19 @@ export default function LandingPage() {
                                                     src={serviceCategories[activeServiceTab].mainImage}
                                                     alt={serviceCategories[activeServiceTab].title}
                                                     fill
-                                                    className={`object-cover transition-all duration-700 group-hover:scale-110 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
+                                                    className={`object-cover transition-all duration-700 group-hover:scale-105 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
                                                         }`}
                                                     sizes="50vw"
                                                     onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
                                                 />
-                                                {/* Enhanced hover overlay */}
+                                                {/* Click to view overlay */}
                                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                                     <div className="bg-white/95 backdrop-blur-sm rounded-lg px-6 py-3 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
                                                         <p className="text-gray-800 font-semibold flex items-center gap-2">
                                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                             </svg>
-                                                            View Full Size
+                                                            Click to enlarge
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1068,11 +1084,15 @@ export default function LandingPage() {
                                         </div>
                                     </div>
 
-                                    {/* Gallery Images - Larger and better spacing */}
+                                    {/* Gallery Images - Clickable */}
                                     <div className="px-8 pb-8">
                                         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                                             {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
-                                                <div key={index} className="relative h-40 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer">
+                                                <div
+                                                    key={index}
+                                                    className="relative h-40 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer"
+                                                    onClick={() => setModalImage(image)}
+                                                >
                                                     {!imagesLoaded[image] && (
                                                         <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
                                                     )}
@@ -1080,16 +1100,16 @@ export default function LandingPage() {
                                                         src={image}
                                                         alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
                                                         fill
-                                                        className={`object-cover transition-all duration-700 group-hover:scale-110 ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                        className={`object-cover transition-all duration-700 group-hover:scale-105 ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
                                                             }`}
                                                         sizes="20vw"
                                                         onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
                                                     />
-                                                    {/* Enhanced hover overlay */}
+                                                    {/* Click overlay */}
                                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
                                                         <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
                                                             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                                             </svg>
                                                         </div>
                                                     </div>
@@ -1103,6 +1123,58 @@ export default function LandingPage() {
                     </div>
                 </div>
             </section>
+
+            {/* Image Modal Popup */}
+            {modalImage && (
+                <div
+                    className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4"
+                    onClick={() => setModalImage(null)}
+                >
+                    {/* Close button */}
+                    <button
+                        onClick={() => setModalImage(null)}
+                        className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-[101]"
+                        aria-label="Close modal"
+                    >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+
+                    {/* Modal content - Click to prevent closing */}
+                    <div
+                        className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="relative w-full h-full max-w-5xl max-h-[90vh]">
+                            <Image
+                                src={modalImage}
+                                alt="Full size image"
+                                fill
+                                className="object-contain"
+                                sizes="100vw"
+                                quality={100}
+                                priority
+                            />
+                        </div>
+                    </div>
+
+                    {/* Loading indicator */}
+                    {!imagesLoaded[modalImage] && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Add modalImage state to your component */}
+            <script dangerouslySetInnerHTML={{
+                __html: `
+                    // Add this to your component state:
+                    // const [modalImage, setModalImage] = useState(null);
+                `
+            }} />
 
             {/* Testimonials Section */}
             <section
@@ -1487,7 +1559,7 @@ export default function LandingPage() {
                     </div>
                 </div>
             </footer>
-            
+
             {/* WhatsApp Floating Button */}
             <div className="fixed bottom-20 right-6 z-50">
                 <a
