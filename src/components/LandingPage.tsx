@@ -45,6 +45,10 @@ interface ContentStructure {
         title: string;
         subtitle: string;
         cta: string;
+        keyFeatures: {
+            title: string;
+            items: string[];
+        };
         categories: {
             canopy: {
                 title: string;
@@ -226,6 +230,15 @@ export default function LandingPage() {
                 title: "Our Roofing Services",
                 subtitle: "Comprehensive roof solutions tailored to your specific needs",
                 cta: "Get a Quote",
+                keyFeatures: {
+                    title: "Key Features",
+                    items: [
+                        "Professional installation and maintenance",
+                        "Weather-resistant materials",
+                        "Long-term durability guarantee", 
+                        "Expert consultation included"
+                    ]
+                },
                 categories: {
                     canopy: {
                         title: "Roof Canopy Works",
@@ -415,6 +428,15 @@ export default function LandingPage() {
                 title: "我们的屋顶服务",
                 subtitle: "为您的特定需求量身定制的全面屋顶解决方案",
                 cta: "获取报价",
+                keyFeatures: {
+                    title: "主要特点",
+                    items: [
+                        "专业安装和维护",
+                        "耐候材料",
+                        "长期耐用性保证",
+                        "包含专家咨询"
+                    ]
+                },
                 categories: {
                     canopy: {
                         title: "屋顶遮篷工程",
