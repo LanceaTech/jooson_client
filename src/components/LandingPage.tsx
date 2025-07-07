@@ -755,7 +755,8 @@ export default function LandingPage() {
                             {!imagesLoaded[slide.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                                        <div className="w-16 h-16 border-4 border-[#4043a3] border-t-transparent rounded-full animate-spin"></div>
+
                                     </div>
                                 </div>
                             )}
@@ -824,7 +825,8 @@ export default function LandingPage() {
                                                         const contactSection = document.getElementById('contact');
                                                         contactSection?.scrollIntoView({ behavior: 'smooth' });
                                                     }}
-                                                    className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all hover:scale-105 shadow-lg"
+                                                    className="bg-[#4043a3] hover:bg-[#3a3d93] text-white px-8 py-3 rounded-lg text-lg font-semibold transition-all hover:scale-105 shadow-lg"
+
                                                 >
                                                     {content[language].hero.cta}
                                                 </button>
@@ -839,8 +841,7 @@ export default function LandingPage() {
                                     <button
                                         key={index}
                                         onClick={() => setCurrentSlide(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-blue-500 w-8' : 'bg-white/50'
-                                            }`}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-[#4043a3] w-8' : 'bg-white/50'}`}
                                         aria-label={`Go to slide ${index + 1}`}
                                     />
                                 ))}
@@ -877,15 +878,15 @@ export default function LandingPage() {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
                                 <div className="text-center">
-                                    <div className="text-4xl font-bold text-blue-500">15+</div>
+                                    <div className="text-4xl font-bold text-[#4043a3]">15+</div>
                                     <div className="text-gray-600">{content[language].about.stats.experience}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-4xl font-bold text-blue-500">500+</div>
+                                    <div className="text-4xl font-bold text-[#4043a3]">500+</div>
                                     <div className="text-gray-600">{content[language].about.stats.projects}</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="text-4xl font-bold text-blue-500">100%</div>
+                                    <div className="text-4xl font-bold text-[#4043a3]">100%</div>
                                     <div className="text-gray-600">{content[language].about.stats.satisfaction}</div>
                                 </div>
                             </div>
@@ -944,8 +945,8 @@ export default function LandingPage() {
                                             onClick={() => setActiveServiceTab(key)}
                                             className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 text-center ${
                                                 activeServiceTab === key
-                                                    ? 'bg-blue-500 text-white shadow-md'
-                                                    : 'bg-white text-gray-600 hover:text-blue-500 hover:bg-blue-50 shadow-sm'
+                                                    ? 'bg-[#4043a3] text-white shadow-md'
+                                                    : 'bg-white text-gray-600 hover:text-[#4043a3] hover:bg-blue-50 shadow-sm'
                                             }`}
                                         >
                                             {category.title}
@@ -964,8 +965,8 @@ export default function LandingPage() {
                                             onClick={() => setActiveServiceTab(key)}
                                             className={`px-6 py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap ${
                                                 activeServiceTab === key
-                                                    ? 'bg-blue-500 text-white shadow-md'
-                                                    : 'text-gray-600 hover:text-blue-500 hover:bg-blue-50'
+                                                    ? 'bg-[#4043a3] text-white shadow-md'
+                                                    : 'text-gray-600 hover:text-[#4043a3] hover:bg-blue-50'
                                             }`}
                                         >
                                             {category.title}
@@ -1029,8 +1030,7 @@ export default function LandingPage() {
                                                 const contactSection = document.getElementById('contact');
                                                 contactSection?.scrollIntoView({ behavior: 'smooth' });
                                             }}
-                                            className="text-blue-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-blue-600"
-                                        >
+                                            className="text-[#4043a3] font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-[#3a3d93]"                                        >
                                             {content[language].services.cta} <ArrowRight size={20} />
                                         </button>
                                     </div>
@@ -1087,8 +1087,7 @@ export default function LandingPage() {
                                                     const contactSection = document.getElementById('contact');
                                                     contactSection?.scrollIntoView({ behavior: 'smooth' });
                                                 }}
-                                                className="text-blue-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-blue-600"
-                                            >
+                                                className="text-[#4043a3] font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-[#3a3d93]"                                            >
                                                 {content[language].services.cta} <ArrowRight size={20} />
                                             </button>
                                         </div>
@@ -1573,8 +1572,8 @@ export default function LandingPage() {
                                         disabled={state.submitting}
                                         className={`px-8 py-4 rounded-lg text-lg font-semibold transition-all transform shadow-lg ${state.submitting
                                             ? 'bg-gray-500 cursor-not-allowed'
-                                            : 'bg-blue-500 hover:bg-blue-600 hover:scale-105'
-                                            } text-white`}
+                                            : 'bg-[#4043a3] hover:bg-[#3a3d93] hover:scale-105'
+                                        } text-white`}
                                     >
                                         {state.submitting ? 'Sending...' : content[language].contact.form.submit}
                                     </button>
@@ -1764,7 +1763,7 @@ export default function LandingPage() {
                         setLanguage(language === 'en' ? 'zh' : 'en');
                         log(`Language switched to: ${language === 'en' ? 'Chinese' : 'English'}`);
                     }}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2 font-medium"
+                    className="bg-[#4043a3] hover:bg-[#3a3d93] text-white px-4 py-2 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2 font-medium"
                 >
                     <span className="text-sm">{language === 'en' ? '中文' : 'EN'}</span>
                     <div className="w-1 h-1 bg-white rounded-full"></div>
