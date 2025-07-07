@@ -892,7 +892,7 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Services Section with Updated Layout */}
+            {/* Services Section with Complete Layout */}
             <section 
                 id="services" 
                 ref={(el) => {
@@ -953,7 +953,7 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    {/* Service Content with New Layout */}
+                    {/* Service Content */}
                     <div className={`transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         {serviceCategories[activeServiceTab] && (
                             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -1046,7 +1046,7 @@ export default function LandingPage() {
                                     </div>
                                 </div>
 
-                                {/* Desktop Layout - Based on 4 or 6 images */}
+                                {/* Desktop Layout */}
                                 <div className="hidden md:block">
                                     <div className="p-8">
                                         {/* Service Title and Description */}
@@ -1071,70 +1071,87 @@ export default function LandingPage() {
                                             </button>
                                         </div>
 
-                                        {/* Image Grid Layout */}
-                                        {serviceCategories[activeServiceTab].galleryImages.length <= 3 ? (
-                                            /* 4 Images Layout: Main image + text field + 2 gallery images + 1 wide gallery image */
-                                            <div className="grid grid-cols-2 gap-6">
-                                                {/* Main Image - Top Left */}
-                                                <div 
-                                                    className="relative h-80 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
-                                                    onClick={() => setModalImage(serviceCategories[activeServiceTab].mainImage)}
-                                                >
-                                                    {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
-                                                        <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                            <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-                                                        </div>
-                                                    )}
-                                                    <Image
-                                                        src={serviceCategories[activeServiceTab].mainImage}
-                                                        alt={serviceCategories[activeServiceTab].title}
-                                                        fill
-                                                        className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                                                            imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
-                                                        }`}
-                                                        sizes="50vw"
-                                                        onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                        <div className="bg-white/95 backdrop-blur-sm rounded-lg px-6 py-3 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
-                                                            <p className="text-gray-800 font-semibold flex items-center gap-2">
-                                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                </svg>
-                                                                Click to enlarge
-                                                            </p>
-                                                        </div>
+                                        {/* Main Image + Text Field Layout */}
+                                        <div className="grid grid-cols-2 gap-6 mb-6">
+                                            {/* Main Image - Left */}
+                                            <div 
+                                                className="relative h-80 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                                                onClick={() => setModalImage(serviceCategories[activeServiceTab].mainImage)}
+                                            >
+                                                {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                                        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                                    </div>
+                                                )}
+                                                <Image
+                                                    src={serviceCategories[activeServiceTab].mainImage}
+                                                    alt={serviceCategories[activeServiceTab].title}
+                                                    fill
+                                                    className={`object-cover transition-all duration-700 group-hover:scale-105 ${
+                                                        imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
+                                                    }`}
+                                                    sizes="50vw"
+                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
+                                                />
+                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                                    <div className="bg-white/95 backdrop-blur-sm rounded-lg px-6 py-3 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
+                                                        <p className="text-gray-800 font-semibold flex items-center gap-2">
+                                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                                            </svg>
+                                                            Click to enlarge
+                                                        </p>
                                                     </div>
                                                 </div>
+                                            </div>
 
-                                                {/* Text Field - Top Right */}
-                                                <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-orange-200">
-                                                    <h4 className="text-xl font-bold text-gray-800 mb-4">Key Features</h4>
-                                                    <ul className="space-y-3">
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Professional installation and maintenance</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Weather-resistant materials</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Long-term durability guarantee</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Expert consultation included</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                            {/* Text Field - Right */}
+                                            <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-orange-200">
+                                                <h4 className="text-xl font-bold text-gray-800 mb-4">Key Features</h4>
+                                                <ul className="space-y-3">
+                                                    <li className="flex items-start gap-3">
+                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                                        <span className="text-gray-700">Professional installation and maintenance</span>
+                                                    </li>
+                                                    <li className="flex items-start gap-3">
+                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                                        <span className="text-gray-700">Weather-resistant materials</span>
+                                                    </li>
+                                                    <li className="flex items-start gap-3">
+                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                                        <span className="text-gray-700">Long-term durability guarantee</span>
+                                                    </li>
+                                                    <li className="flex items-start gap-3">
+                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                                        <span className="text-gray-700">Expert consultation included</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
 
-                                                {/* Gallery Images - Bottom Row */}
-                                                {serviceCategories[activeServiceTab].galleryImages.slice(0, 2).map((image, index) => (
+                                        {/* Bottom Row - All Gallery Images in Adaptive Grid */}
+                                        <div className="mt-6">
+                                            <div className={`grid gap-4 ${
+                                                serviceCategories[activeServiceTab].galleryImages.length <= 3 
+                                                    ? 'grid-cols-3' 
+                                                    : serviceCategories[activeServiceTab].galleryImages.length === 4
+                                                    ? 'grid-cols-2'
+                                                    : serviceCategories[activeServiceTab].galleryImages.length === 5
+                                                    ? 'grid-cols-3'
+                                                    : 'grid-cols-3'
+                                            }`}>
+                                                {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
                                                     <div 
                                                         key={index}
-                                                        className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
+                                                        className={`relative bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer ${
+                                                            serviceCategories[activeServiceTab].galleryImages.length <= 3
+                                                                ? 'h-48'
+                                                                : serviceCategories[activeServiceTab].galleryImages.length === 4
+                                                                ? 'h-52'
+                                                                : serviceCategories[activeServiceTab].galleryImages.length === 5 && index >= 3
+                                                                ? 'col-span-3 h-40'
+                                                                : 'h-48'
+                                                        }`}
                                                         onClick={() => setModalImage(image)}
                                                     >
                                                         {!imagesLoaded[image] && (
@@ -1147,7 +1164,15 @@ export default function LandingPage() {
                                                             className={`object-cover transition-all duration-700 group-hover:scale-105 ${
                                                                 imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
                                                             }`}
-                                                            sizes="50vw"
+                                                            sizes={
+                                                                serviceCategories[activeServiceTab].galleryImages.length <= 3
+                                                                    ? '33vw'
+                                                                    : serviceCategories[activeServiceTab].galleryImages.length === 4
+                                                                    ? '50vw'
+                                                                    : serviceCategories[activeServiceTab].galleryImages.length === 5 && index >= 3
+                                                                    ? '100vw'
+                                                                    : '33vw'
+                                                            }
                                                             onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
                                                         />
                                                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
@@ -1159,118 +1184,8 @@ export default function LandingPage() {
                                                         </div>
                                                     </div>
                                                 ))}
-
-                                                {/* Wide Gallery Image - Full Bottom Width */}
-                                                {serviceCategories[activeServiceTab].galleryImages[2] && (
-                                                    <div 
-                                                        className="col-span-2 relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
-                                                        onClick={() => setModalImage(serviceCategories[activeServiceTab].galleryImages[2])}
-                                                    >
-                                                        {!imagesLoaded[serviceCategories[activeServiceTab].galleryImages[2]] && (
-                                                            <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
-                                                        )}
-                                                        <Image
-                                                            src={serviceCategories[activeServiceTab].galleryImages[2]}
-                                                            alt={`${serviceCategories[activeServiceTab].title} wide view`}
-                                                            fill
-                                                            className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                                                                imagesLoaded[serviceCategories[activeServiceTab].galleryImages[2]] ? 'opacity-100' : 'opacity-0'
-                                                            }`}
-                                                            sizes="100vw"
-                                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].galleryImages[2]]: true }))}
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                            <div className="bg-white/95 backdrop-blur-sm rounded-lg px-6 py-3 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
-                                                                <p className="text-gray-800 font-semibold flex items-center gap-2">
-                                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                    </svg>
-                                                                    Click to enlarge
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
                                             </div>
-                                        ) : (
-                                            /* 6+ Images Layout */
-                                            <div className="grid grid-cols-2 gap-6">
-                                                {/* Main Image */}
-                                                <div 
-                                                    className="relative h-80 bg-gray-200 rounded-xl overflow-hidden shadow-lg group cursor-pointer"
-                                                    onClick={() => setModalImage(serviceCategories[activeServiceTab].mainImage)}
-                                                >
-                                                    <Image
-                                                        src={serviceCategories[activeServiceTab].mainImage}
-                                                        alt={serviceCategories[activeServiceTab].title}
-                                                        fill
-                                                        className="object-cover transition-all duration-700 group-hover:scale-105"
-                                                        sizes="50vw"
-                                                    />
-                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                        <div className="bg-white/95 backdrop-blur-sm rounded-lg px-6 py-3 transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 shadow-lg">
-                                                            <p className="text-gray-800 font-semibold flex items-center gap-2">
-                                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                </svg>
-                                                                Click to enlarge
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                {/* Text Field */}
-                                                <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-orange-200">
-                                                    <h4 className="text-xl font-bold text-gray-800 mb-4">Key Features</h4>
-                                                    <ul className="space-y-3">
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Professional installation and maintenance</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Weather-resistant materials</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Long-term durability guarantee</span>
-                                                        </li>
-                                                        <li className="flex items-start gap-3">
-                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                            <span className="text-gray-700">Expert consultation included</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-                                                {/* Gallery Images - Bottom Grid */}
-                                                <div className="col-span-2">
-                                                    <div className="grid grid-cols-3 gap-4">
-                                                        {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
-                                                            <div 
-                                                                key={index}
-                                                                className="relative h-32 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                                                                onClick={() => setModalImage(image)}
-                                                            >
-                                                                <Image
-                                                                    src={image}
-                                                                    alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
-                                                                    fill
-                                                                    className="object-cover transition-all duration-700 group-hover:scale-105"
-                                                                    sizes="33vw"
-                                                                />
-                                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                                    <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
-                                                                        <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
