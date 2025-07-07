@@ -755,7 +755,7 @@ export default function LandingPage() {
                             {!imagesLoaded[slide.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                                     </div>
                                 </div>
                             )}
@@ -894,7 +894,7 @@ export default function LandingPage() {
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
                             {!imagesLoaded[content[language].about.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                    <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                                 </div>
                             )}
 
@@ -988,7 +988,7 @@ export default function LandingPage() {
                                     >
                                         {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                             <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                                             </div>
                                         )}
                                         <Image
@@ -1102,7 +1102,7 @@ export default function LandingPage() {
                                             >
                                                 {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                                     <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
-                                                        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                                        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                                                     </div>
                                                 )}
                                                 <Image
@@ -1128,7 +1128,7 @@ export default function LandingPage() {
                                             </div>
 
                                             {/* Text Field - Right */}
-                                            <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-orange-200">
+                                            <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-blue-200">
                                                 <h4 className="text-xl font-bold text-gray-800 mb-4">
                                                     {content[language].services.keyFeatures.title}
                                                 </h4>
