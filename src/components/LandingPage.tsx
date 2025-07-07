@@ -953,67 +953,6 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    {/* Services Section with Complete Layout */}
-            <section 
-                id="services" 
-                ref={(el) => {
-                    sectionRefs.current.services = el;
-                }}
-                className="py-20 bg-gray-50"
-            >
-                <div className="container mx-auto px-4">
-                    <div className={`mb-12 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
-                        <h2 className="text-4xl font-bold text-gray-800 mb-4 text-center md:text-left md:pl-8">
-                            {content[language].services.title}
-                        </h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto text-center md:text-left md:mx-0 md:pl-8">
-                            {content[language].services.subtitle}
-                        </p>
-                    </div>
-
-                    {/* Service Tabs - Mobile: 2x2 Grid, Desktop: Horizontal */}
-                    <div className="flex justify-center md:justify-start mb-8 md:mb-12 px-2">
-                        {/* Mobile: 2x2 Grid Layout */}
-                        <div className="block md:hidden w-full max-w-md">
-                            <div className="grid grid-cols-2 gap-3">
-                                {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
-                                    .map(([key, category]) => (
-                                        <button
-                                            key={key}
-                                            onClick={() => setActiveServiceTab(key)}
-                                            className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 text-center ${
-                                                activeServiceTab === key
-                                                    ? 'bg-orange-500 text-white shadow-md'
-                                                    : 'bg-white text-gray-600 hover:text-orange-500 hover:bg-orange-50 shadow-sm'
-                                            }`}
-                                        >
-                                            {category.title}
-                                        </button>
-                                    ))}
-                            </div>
-                        </div>
-
-                        {/* Desktop: Horizontal Layout */}
-                        <div className="hidden md:block">
-                            <div className="bg-white rounded-xl p-1 shadow-lg inline-flex">
-                                {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
-                                    .map(([key, category]) => (
-                                        <button
-                                            key={key}
-                                            onClick={() => setActiveServiceTab(key)}
-                                            className={`px-6 py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap ${
-                                                activeServiceTab === key
-                                                    ? 'bg-orange-500 text-white shadow-md'
-                                                    : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
-                                            }`}
-                                        >
-                                            {category.title}
-                                        </button>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
-
                     {/* Service Content */}
                     <div className={`transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         {serviceCategories[activeServiceTab] && (
