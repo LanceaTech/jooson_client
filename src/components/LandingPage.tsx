@@ -1128,7 +1128,7 @@ export default function LandingPage() {
                                             </div>
 
                                             {/* Text Field - Right */}
-                                            <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-blue-200">
+                                            <div className="h-80 bg-gradient-to-br from-blue-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-blue-200">
                                                 <h4 className="text-xl font-bold text-gray-800 mb-4">
                                                     {content[language].services.keyFeatures.title}
                                                 </h4>
