@@ -12,7 +12,6 @@ const inter = Inter({
     variable: '--font-inter',
 });
 
-
 type LanguageKey = 'en' | 'zh';
 
 interface ContentStructure {
@@ -47,32 +46,33 @@ interface ContentStructure {
         subtitle: string;
         cta: string;
         categories: {
-            roofing: {
+            canopy: {
                 title: string;
-                sections: Array<{
-                    title: string;
-                    description: string;
-                    image: string;
-                    points: string[];
-                }>;
+                description: string;
+                mainImage: string;
+                textContent: string;
+                galleryImages: string[];
             };
-            walls: {
+            metalRoof: {
                 title: string;
-                sections: Array<{
-                    title: string;
-                    description: string;
-                    image: string;
-                    points: string[];
-                }>;
+                description: string;
+                mainImage: string;
+                textContent: string;
+                galleryImages: string[];
             };
-            restoration: {
+            gutter: {
                 title: string;
-                sections: Array<{
-                    title: string;
-                    description: string;
-                    image: string;
-                    points: string[];
-                }>;
+                description: string;
+                mainImage: string;
+                textContent: string;
+                galleryImages: string[];
+            };
+            downpipe: {
+                title: string;
+                description: string;
+                mainImage: string;
+                textContent: string;
+                galleryImages: string[];
             };
         };
     };
@@ -161,14 +161,14 @@ export default function LandingPage() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [testimonialSlide, setTestimonialSlide] = useState(0);
     const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
-    const [activeServiceTab, setActiveServiceTab] = useState<ServiceCategoryKey>('roofing');
+    const [activeServiceTab, setActiveServiceTab] = useState<ServiceCategoryKey>('canopy');
     const [language, setLanguage] = useState<LanguageKey>('en');
     const [imagesLoaded, setImagesLoaded] = useState<Record<string, boolean>>({});
     const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
     const [state, handleSubmit] = useForm("mblovkgv");
 
-    // Define a type for your service categories keys
-    type ServiceCategoryKey = 'roofing' | 'walls' | 'restoration';
+    // Define service categories keys for roof services only
+    type ServiceCategoryKey = 'canopy' | 'metalRoof' | 'gutter' | 'downpipe';
 
     const log = (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
         const timestamp = new Date().toISOString();
@@ -190,14 +190,14 @@ export default function LandingPage() {
             slides: [
                 {
                     title: "Joo Soon Metal Works Pte Ltd",
-                    subtitle: "Professional Waterproofing Solutions",
-                    description: "Comprehensive waterproofing protection for all roof types and wet areas, ensuring long-lasting defense against water damage with advanced membrane systems.",
+                    subtitle: "Professional Roof Solutions",
+                    description: "Comprehensive roofing services including canopy works, metal roof installations, gutter systems, and downpipe solutions for residential and commercial properties.",
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
                     title: "Joo Soon Metal Works Pte Ltd",
-                    subtitle: "Metal Roof Restoration & Protection",
-                    description: "Specialized rustproofing and waterproofing services to extend the life of metal roofing systems. From rust treatment to protective coatings, we ensure your roof stands the test of time.",
+                    subtitle: "Expert Roof Maintenance & Installation",
+                    description: "Specialized in roof canopy construction, metal roofing systems, and complete water drainage solutions. Quality workmanship with long-lasting results.",
                     image: "/assets/images/hero/roofing-solutions.jpg"
                 }
             ],
@@ -222,110 +222,61 @@ export default function LandingPage() {
                 }
             },
             services: {
-                title: "Our Professional Services",
-                subtitle: "Comprehensive solutions tailored to your specific construction and maintenance needs",
+                title: "Our Roofing Services",
+                subtitle: "Comprehensive roof solutions tailored to your specific needs",
+                cta: "Get a Quote",
                 categories: {
-                    roofing: {
-                        title: "Roofing Works",
-                        sections: [
-                            {
-                                title: "Waterproofing Solutions",
-                                description: "Comprehensive waterproofing protection for all roof types and wet areas, ensuring long-lasting defense against water damage.",
-                                image: "/assets/images/hero/repainting.jpg",
-                                points: [
-                                    "Flat roof waterproofing with bituminous or liquid membranes",
-                                    "Sloped roof protection with underlayment and flashing systems",
-                                    "Concrete roof treatments using crystalline or acrylic coatings",
-                                    // "Wet area waterproofing for bathrooms and balconies",
-                                    "Cementitious and liquid-applied membrane solutions"
-                                ]
-                            },
-                            {
-                                title: "Metal Roof Protection",
-                                description: "Specialized rustproofing and waterproofing services to extend the life of metal roofing systems and prevent corrosion.",
-                                image: "/assets/images/hero/drillroof2.jpg",
-                                points: [
-                                    "Rust-inhibiting primer application for corrosion prevention",
-                                    "Elastomeric and polyurethane coating systems",
-                                    "UV-resistant and flexible waterproof seals",
-                                    "Treatment of seams, fasteners, and exposed edges",
-                                    "Regular maintenance and protective reapplication"
-                                ]
-                            },
-                            {
-                                title: "Roof Component Services",
-                                description: "Complete installation and replacement of essential roofing components to ensure optimal performance and weather protection.",
-                                image: "/assets/images/hero/roofinstall.jpg",
-                                points: [
-                                    "Roofing sheet replacement and installation",
-                                    "Skylight installation with proper weatherproofing",
-                                    "Gutter and downpipe systems for water management",
-                                    "Flashing and capping for joint and edge protection",
-                                    "Ridge and valley weatherproofing solutions"
-                                ]
-                            }
+                    canopy: {
+                        title: "Roof Canopy Works",
+                        description: "Professional installation and maintenance of roof canopies for enhanced weather protection and aesthetic appeal.",
+                        mainImage: "/assets/images/canopy/after_1.jpg",
+                        textContent: "Our roof canopy services provide effective weather protection while enhancing the architectural appeal of your property. We specialize in custom canopy designs that seamlessly integrate with existing structures, offering both functional benefits and visual enhancement. Our experienced team ensures proper installation with attention to structural integrity, drainage, and long-term durability. From residential walkways to commercial building entrances, we deliver canopy solutions that withstand Singapore's tropical climate while maintaining their aesthetic appeal for years to come.",
+                        galleryImages: [
+                            "/assets/images/canopy/after_2.jpg",
+                            "/assets/images/canopy/before_1.jpg",
+                            "/assets/images/canopy/before_2.jpg"
                         ]
                     },
-                    walls: {
-                        title: "Wall Works",
-                        sections: [
-                            {
-                                title: "Wall Waterproofing",
-                                description: "Professional waterproof coating systems for all wall surfaces, providing moisture protection while maintaining breathability.",
-                                image: "/assets/images/hero/wallcoat.jpg",
-                                points: [
-                                    "Plastered wall coating with seamless moisture barriers",
-                                    "Tile surface waterproofing for wet areas",
-                                    "Brick wall sealing while preserving natural appearance",
-                                    "Liquid and cementitious coating applications",
-                                    "Interior and exterior moisture protection systems"
-                                ]
-                            },
-                            {
-                                title: "External Wall Painting & Protection",
-                                description: "High-quality exterior painting services that refresh appearance while providing weather protection and UV resistance.",
-                                image: "/assets/images/hero/wallpainting2.jpg",
-                                points: [
-                                    "Comprehensive surface preparation and cleaning",
-                                    "High-quality exterior-grade acrylic paint systems",
-                                    "UV-resistant and weatherproof topcoat applications",
-                                    "Durability enhancement for temperature fluctuations",
-                                    "Long-lasting color retention and fade resistance"
-                                ]
-                            }
+                    metalRoof: {
+                        title: "Metal Roof Works",
+                        description: "Complete metal roofing solutions including installation, replacement, restoration, and protective coating applications.",
+                        mainImage: "/assets/images/replace_metal_roof/after_1.jpg",
+                        textContent: "Our metal roofing services cover everything from new installations to comprehensive restoration projects. We work with various metal roofing materials including corrugated sheets, standing seam systems, and specialized industrial roofing solutions. Our expertise includes rust treatment, protective coating applications, and structural reinforcement to extend roof life significantly. Whether you need complete roof replacement or targeted repairs, our team delivers solutions that provide excellent weather resistance, energy efficiency, and long-term value for your investment.",
+                        galleryImages: [
+                            "/assets/images/replace_metal_roof/after_2.jpg",
+                            "/assets/images/replace_metal_roof/after_3.jpg",
+                            "/assets/images/replace_metal_roof/before_1.jpg",
+                            "/assets/images/replace_metal_roof/before_2.jpg",
+                            "/assets/images/replace_metal_roof/before_3.jpg"
                         ]
                     },
-                    restoration: {
-                        title: "Structural Restoration",
-                        sections: [
-                            {
-                                title: "Concrete Repair & Sealing",
-                                description: "Advanced concrete restoration techniques combining PU grouting and spalling repair to restore structural integrity.",
-                                image: "/assets/images/hero/grouting2.jpg",
-                                points: [
-                                    "PU grouting for active water leak sealing",
-                                    "Expanding polyurethane resin injection systems",
-                                    "Spalling concrete surface restoration",
-                                    "Steel reinforcement treatment and replacement",
-                                    "Structural rehabilitation for basements and tunnels"
-                                ]
-                            },
-                            {
-                                title: "Specialized Coating & Cleaning",
-                                description: "Professional floor coating, window sealing, and façade cleaning services to enhance durability and appearance.",
-                                image: "/assets/images/hero/indusfloor.jpg",
-                                points: [
-                                    "Epoxy and polyurethane floor coating systems",
-                                    "Chemical and impact-resistant industrial flooring",
-                                    "High-quality silicone window sealant applications",
-                                    "Professional façade cleaning and restoration",
-                                    "Pressure washing and chemical treatment services"
-                                ]
-                            }
+                    gutter: {
+                        title: "Gutter Works",
+                        description: "Professional gutter installation, replacement, and maintenance services to ensure proper water drainage and building protection.",
+                        mainImage: "/assets/images/replace_gutter/after_1_1.jpg",
+                        textContent: "Proper gutter systems are essential for protecting your property from water damage. Our gutter services include installation of new systems, replacement of damaged gutters, and comprehensive maintenance programs. We work with various gutter materials and profiles to match your specific requirements and architectural style. Our installations ensure optimal water flow, proper slope calculations, and secure mounting systems that withstand heavy rainfall and strong winds common in Singapore's climate.",
+                        galleryImages: [
+                            "/assets/images/replace_gutter/after_1_2.jpg",
+                            "/assets/images/replace_gutter/after_2_1.jpg",
+                            "/assets/images/replace_gutter/after_2_2.jpg",
+                            "/assets/images/replace_gutter/before_1_1.jpg",
+                            "/assets/images/replace_gutter/before_2_1.jpg"
+                        ]
+                    },
+                    downpipe: {
+                        title: "Downpipe Works",
+                        description: "Complete downpipe systems installation and maintenance for effective rainwater management and drainage solutions.",
+                        mainImage: "/assets/images/replace_downpipe/after_1.jpg",
+                        textContent: "Effective downpipe systems are crucial for directing rainwater away from your building's foundation and preventing water-related damage. Our downpipe services encompass design, installation, and maintenance of complete drainage systems. We ensure proper sizing, optimal placement, and secure mounting to handle Singapore's intense rainfall patterns. Our solutions include both visible and concealed downpipe installations, with options for decorative finishes that complement your building's architecture while maintaining superior functionality.",
+                        galleryImages: [
+                            "/assets/images/replace_downpipe/after_2.jpg",
+                            "/assets/images/replace_downpipe/after_3.jpg",
+                            "/assets/images/replace_downpipe/before_1.jpg",
+                            "/assets/images/replace_downpipe/before_2.jpg",
+                            "/assets/images/replace_downpipe/before_3.jpg"
                         ]
                     }
-                },
-                cta: "Get a Quote"
+                }
             },
             testimonials: {
                 title: "What Our Clients Say",
@@ -364,9 +315,10 @@ export default function LandingPage() {
                     service: "Service Needed",
                     servicePlaceholder: "Select a service",
                     serviceOptions: [
-                        { value: "roofing-works", label: "Roofing Works" },
-                        { value: "wall-works", label: "Wall Works" },
-                        { value: "structural-restoration", label: "Structural Restoration" },
+                        { value: "canopy-works", label: "Roof Canopy Works" },
+                        { value: "metal-roof-works", label: "Metal Roof Works" },
+                        { value: "gutter-works", label: "Gutter Works" },
+                        { value: "downpipe-works", label: "Downpipe Works" },
                         { value: "other", label: "Other" }
                     ],
                     message: "Message",
@@ -384,7 +336,7 @@ export default function LandingPage() {
             },
             footer: {
                 companyName: "Joo Soon Metal Works Pte Ltd",
-                description: "Joo Soon Metal Works specializes in providing professional solutions to building maintenance problems. We provide the following services for private condominiums, commercial and industrial buildings, hotels and government facilities.",
+                description: "Joo Soon Metal Works specializes in providing professional roofing solutions. We provide comprehensive roof services including canopy works, metal roof installations, gutter systems, and downpipe solutions for private condominiums, commercial and industrial buildings, hotels and government facilities.",
                 quickLinks: {
                     title: "Quick Links",
                     home: "Home",
@@ -399,15 +351,15 @@ export default function LandingPage() {
                     contact: "Contact Us"
                 },
                 servicesSection: {
-                    title: "Services",
-                    waterproofing: "Waterproofing to different types of roofs",
-                    wallCoating: "Wall waterproof coating to plastered, tiled or brick surface",
-                    repainting: "Repainting to external wall",
-                    rustproofing: "Rustproofing and waterproofing to metal roofs",
-                    metalWorks: "Other related metal roof works: replacement of roofing sheets, skylights, gutters, flashing, capping, downpipes, etc",
-                    puGrouting: "PU grouting and repair to spalling concrete",
-                    floorCoating: "Factory and carpark floor coating, Window Sealant, Façade Cleaning",
-                    windowSealant: "External window and cladding sealant works"
+                    title: "Roofing Services",
+                    waterproofing: "Roof canopy works and installation",
+                    wallCoating: "Metal roof replacement and restoration",
+                    repainting: "Gutter installation and maintenance",
+                    rustproofing: "Downpipe systems and drainage solutions",
+                    metalWorks: "Roof waterproofing and protective coatings",
+                    puGrouting: "Structural roof repairs and reinforcement",
+                    floorCoating: "Roof inspection and maintenance services",
+                    windowSealant: "Emergency roof repair services"
                 },
                 address: {
                     title: "Address",
@@ -427,14 +379,14 @@ export default function LandingPage() {
             slides: [
                 {
                     title: "Joo Soon Metal Works Pte Ltd",
-                    subtitle: "值得信赖的专业防水解决方案", // "Trusted Professional Waterproofing Solutions"
-                    description: "为您的所有屋顶需求提供优质工艺、可靠服务和具有竞争力的价格。",
+                    subtitle: "专业屋顶解决方案",
+                    description: "全面的屋顶服务，包括遮篷工程、金属屋顶安装、排水沟系统和落水管解决方案，适用于住宅和商业物业。",
                     image: "/assets/images/hero/wallpainting.jpg"
                 },
                 {
                     title: "Joo Soon Metal Works Pte Ltd",
-                    subtitle: "金属屋顶修复与保护专家", // "Metal Roof Restoration & Protection Specialists"
-                    description: "从维修到全面更换，我们以专业技能处理住宅和商业屋顶项目。",
+                    subtitle: "专业屋顶维护与安装",
+                    description: "专业从事屋顶遮篷建设、金属屋顶系统和完整的排水解决方案。优质工艺，持久效果。",
                     image: "/assets/images/hero/roofing-solutions.jpg"
                 }
             ],
@@ -449,7 +401,7 @@ export default function LandingPage() {
             },
             about: {
                 title: "关于我们的公司",
-                description1: "凭借18年在屋顶和建筑行业的经验，我们以优质工艺、诚实定价和卓越客户服务建立了声誉。",
+                description1: "凭借18年在屋顶和建筑行业的经验, 我们以优质工艺、诚实定价和卓越客户服务建立了声誉。",
                 description2: "我们的专业团队致力于按时、按预算交付项目，无论是简单的维修还是完整的改造。",
                 image: "/assets/images/hero/company.jpg",
                 stats: {
@@ -459,110 +411,61 @@ export default function LandingPage() {
                 }
             },
             services: {
-                title: "我们的专业服务",
-                subtitle: "为您的特定建筑和维护需求量身定制的全面解决方案",
+                title: "我们的屋顶服务",
+                subtitle: "为您的特定需求量身定制的全面屋顶解决方案",
+                cta: "获取报价",
                 categories: {
-                    roofing: {
-                        title: "屋顶工程",
-                        sections: [
-                            {
-                                title: "防水解决方案",
-                                description: "为所有屋顶类型和潮湿区域提供全面的防水保护，确保持久防止水损害。",
-                                image: "/assets/images/hero/repainting.jpg",
-                                points: [
-                                    "使用沥青或液体膜的平屋顶防水",
-                                    "使用底层和闪光系统的斜屋顶保护",
-                                    "使用结晶或丙烯酸涂层的混凝土屋顶处理",
-                                    // "浴室和阳台等潮湿区域防水",
-                                    "水泥基和液体施工膜解决方案"
-                                ]
-                            },
-                            {
-                                title: "金属屋顶保护",
-                                description: "专业的防锈和防水服务，延长金属屋顶系统的使用寿命，防止腐蚀。",
-                                image: "/assets/images/hero/drillroof2.jpg",
-                                points: [
-                                    "防锈底漆应用以防止腐蚀",
-                                    "弹性和聚氨酯涂层系统",
-                                    "抗紫外线和柔性防水密封",
-                                    "接缝、紧固件和暴露边缘的处理",
-                                    "定期维护和保护性重新涂装"
-                                ]
-                            },
-                            {
-                                title: "屋顶组件服务",
-                                description: "完整安装和更换基本屋顶组件，确保最佳性能和天气保护。",
-                                image: "/assets/images/hero/roofinstall.jpg",
-                                points: [
-                                    "屋顶板更换和安装",
-                                    "天窗安装和适当的防水",
-                                    "用于水管理的排水沟和落水管系统",
-                                    "接缝和边缘保护的闪光和封盖",
-                                    "屋脊和屋谷防水解决方案"
-                                ]
-                            }
+                    canopy: {
+                        title: "屋顶遮篷工程",
+                        description: "专业的屋顶遮篷安装和维护，提供增强的天气保护和美观效果。",
+                        mainImage: "/assets/images/canopy/after_1.jpg",
+                        textContent: "我们的屋顶遮篷服务提供有效的天气保护，同时增强您物业的建筑美感。我们专门设计定制遮篷，与现有结构无缝集成，既提供功能性好处又增强视觉效果。我们经验丰富的团队确保正确安装，注重结构完整性、排水和长期耐用性。从住宅走道到商业建筑入口，我们提供能够承受新加坡热带气候的遮篷解决方案，同时多年保持美观效果。",
+                        galleryImages: [
+                            "/assets/images/canopy/after_2.jpg",
+                            "/assets/images/canopy/before_1.jpg",
+                            "/assets/images/canopy/before_2.jpg"
                         ]
                     },
-                    walls: {
-                        title: "墙体工程",
-                        sections: [
-                            {
-                                title: "墙体防水",
-                                description: "为所有墙面提供专业防水涂层系统，在保持透气性的同时提供防潮保护。",
-                                image: "/assets/images/hero/wallcoat.jpg",
-                                points: [
-                                    "抹灰墙涂层配备无缝防潮屏障",
-                                    "潮湿区域的瓷砖表面防水",
-                                    "砖墙密封同时保持自然外观",
-                                    "液体和水泥基涂层应用",
-                                    "室内外防潮保护系统"
-                                ]
-                            },
-                            {
-                                title: "外墙涂装与保护",
-                                description: "高质量的外墙涂装服务，既能刷新外观，又能提供天气保护和抗紫外线功能。",
-                                image: "/assets/images/hero/wallpainting2.jpg",
-                                points: [
-                                    "全面的表面准备和清洁",
-                                    "高质量外墙级丙烯酸涂料系统",
-                                    "抗紫外线和防风雨顶涂层应用",
-                                    "温度波动的耐久性增强",
-                                    "持久的颜色保持和抗褪色性"
-                                ]
-                            }
+                    metalRoof: {
+                        title: "金属屋顶工程",
+                        description: "完整的金属屋顶解决方案，包括安装、更换、修复和保护涂层应用。",
+                        mainImage: "/assets/images/replace_metal_roof/after_1.jpg",
+                        textContent: "我们的金属屋顶服务涵盖从新安装到全面修复项目的所有内容。我们使用各种金属屋顶材料，包括波纹板、立缝系统和专业工业屋顶解决方案。我们的专业知识包括防锈处理、保护涂层应用和结构加固，以显著延长屋顶寿命。无论您需要完整的屋顶更换还是针对性维修，我们的团队都能提供出色的耐候性、能效和长期投资价值的解决方案。",
+                        galleryImages: [
+                            "/assets/images/replace_metal_roof/after_2.jpg",
+                            "/assets/images/replace_metal_roof/after_3.jpg",
+                            "/assets/images/replace_metal_roof/before_1.jpg",
+                            "/assets/images/replace_metal_roof/before_2.jpg",
+                            "/assets/images/replace_metal_roof/before_3.jpg"
                         ]
                     },
-                    restoration: {
-                        title: "结构修复",
-                        sections: [
-                            {
-                                title: "混凝土修复与密封",
-                                description: "结合PU灌浆和剥落修复的先进混凝土修复技术，恢复结构完整性。",
-                                image: "/assets/images/hero/grouting2.jpg",
-                                points: [
-                                    "PU灌浆用于活跃漏水密封",
-                                    "膨胀聚氨酯树脂注入系统",
-                                    "剥落混凝土表面修复",
-                                    "钢筋处理和更换",
-                                    "地下室和隧道的结构修复"
-                                ]
-                            },
-                            {
-                                title: "专业涂层与清洁",
-                                description: "专业的地面涂层、窗户密封和外墙清洁服务，增强耐久性和外观。",
-                                image: "/assets/images/hero/indusfloor.jpg",
-                                points: [
-                                    "环氧和聚氨酯地面涂层系统",
-                                    "抗化学和抗冲击工业地面",
-                                    "高质量硅胶窗户密封剂应用",
-                                    "专业外墙清洁和修复",
-                                    "压力清洗和化学处理服务"
-                                ]
-                            }
+                    gutter: {
+                        title: "排水沟工程",
+                        description: "专业的排水沟安装、更换和维护服务，确保适当的排水和建筑保护。",
+                        mainImage: "/assets/images/replace_gutter/after_1_1.jpg",
+                        textContent: "适当的排水沟系统对于保护您的财产免受水损害至关重要。我们的排水沟服务包括新系统安装、损坏排水沟更换和全面维护计划。我们使用各种排水沟材料和型材，以满足您的特定要求和建筑风格。我们的安装确保最佳水流、适当的坡度计算和安全的安装系统，能够承受新加坡气候中常见的大雨和强风。",
+                        galleryImages: [
+                            "/assets/images/replace_gutter/after_1_2.jpg",
+                            "/assets/images/replace_gutter/after_2_1.jpg",
+                            "/assets/images/replace_gutter/after_2_2.jpg",
+                            "/assets/images/replace_gutter/before_1_1.jpg",
+                            "/assets/images/replace_gutter/before_2_1.jpg"
+                        ]
+                    },
+                    downpipe: {
+                        title: "落水管工程",
+                        description: "完整的落水管系统安装和维护，提供有效的雨水管理和排水解决方案。",
+                        mainImage: "/assets/images/replace_downpipe/after_1.jpg",
+                        textContent: "有效的落水管系统对于将雨水从建筑物基础引开并防止与水相关的损害至关重要。我们的落水管服务包括完整排水系统的设计、安装和维护。我们确保适当的尺寸、最佳位置和安全安装，以处理新加坡的强降雨模式。我们的解决方案包括可见和隐藏的落水管安装，并提供装饰性饰面选项，既补充建筑物的建筑风格，又保持卓越的功能性。",
+                        galleryImages: [
+                            "/assets/images/replace_downpipe/after_2.jpg",
+                            "/assets/images/replace_downpipe/after_3.jpg",
+                            "/assets/images/replace_downpipe/before_1.jpg",
+                            "/assets/images/replace_downpipe/before_2.jpg",
+                            "/assets/images/replace_downpipe/before_3.jpg"
                         ]
                     }
-                },
-                cta: "获取报价"
+                }
             },
             testimonials: {
                 title: "客户评价",
@@ -601,9 +504,10 @@ export default function LandingPage() {
                     service: "所需服务",
                     servicePlaceholder: "选择服务",
                     serviceOptions: [
-                        { value: "roofing-works", label: "屋顶工程" },
-                        { value: "wall-works", label: "墙体工程" },
-                        { value: "structural-restoration", label: "结构修复" },
+                        { value: "canopy-works", label: "屋顶遮篷工程" },
+                        { value: "metal-roof-works", label: "金属屋顶工程" },
+                        { value: "gutter-works", label: "排水沟工程" },
+                        { value: "downpipe-works", label: "落水管工程" },
                         { value: "other", label: "其他" }
                     ],
                     message: "信息",
@@ -619,10 +523,9 @@ export default function LandingPage() {
                     area: "7 Mandai Link, Mandai Connection, #03-05, Singapore 728653"
                 }
             },
-
             footer: {
                 companyName: "Joo Soon Metal Works Pte Ltd",
-                description: "Joo Soon Metal Works专门为建筑维护问题提供专业解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供以下服务。",
+                description: "Joo Soon Metal Works专门提供专业屋顶解决方案。我们为私人公寓、商业和工业建筑、酒店和政府设施提供屋顶遮篷工程、金属屋顶安装、排水沟系统和落水管解决方案的全面服务。",
                 quickLinks: {
                     title: "快速链接",
                     home: "首页",
@@ -637,15 +540,15 @@ export default function LandingPage() {
                     contact: "联系我们"
                 },
                 servicesSection: {
-                    title: "服务",
-                    waterproofing: "不同类型屋顶的防水",
-                    wallCoating: "抹灰、瓷砖或砖面的墙体防水涂层",
-                    repainting: "外墙重新涂装",
-                    rustproofing: "金属屋顶的防锈和防水",
-                    metalWorks: "其他相关金属屋顶工程：更换屋顶板、天窗、排水沟、闪光、封盖、落水管等",
-                    puGrouting: "PU灌浆和剥落混凝土修复",
-                    floorCoating: "工厂和停车场地面涂层、窗户密封剂、外墙清洁",
-                    windowSealant: "外窗和包层密封工程"
+                    title: "屋顶服务",
+                    waterproofing: "屋顶遮篷工程和安装",
+                    wallCoating: "金属屋顶更换和修复",
+                    repainting: "排水沟安装和维护",
+                    rustproofing: "落水管系统和排水解决方案",
+                    metalWorks: "屋顶防水和保护涂层",
+                    puGrouting: "结构屋顶维修和加固",
+                    floorCoating: "屋顶检查和维护服务",
+                    windowSealant: "紧急屋顶维修服务"
                 },
                 address: {
                     title: "地址",
@@ -679,7 +582,6 @@ export default function LandingPage() {
             }
         };
 
-
         window.addEventListener('error', handleError);
 
         return () => {
@@ -687,7 +589,6 @@ export default function LandingPage() {
             log('Landing page component unmounted');
         };
     }, []);
-
 
     useEffect(() => {
         const slideInterval = setInterval(() => {
@@ -743,20 +644,18 @@ export default function LandingPage() {
         };
     }, []);
 
-    // REPLACE with this fixed version:
     useEffect(() => {
         const preloadCriticalImages = async () => {
             const criticalImages = [
                 slides[0]?.image,
                 slides[1]?.image,
-                serviceCategories.roofing?.sections[0]?.image
+                serviceCategories.canopy?.mainImage
             ].filter(Boolean);
 
-            // Only preload images that aren't already loaded
             const imagesToLoad = criticalImages.filter(src => !imagesLoaded[src]);
 
             if (imagesToLoad.length === 0) {
-                return; // All images already loaded, skip
+                return;
             }
 
             log(`Preloading ${imagesToLoad.length} critical images`);
@@ -777,22 +676,20 @@ export default function LandingPage() {
             log('Critical images preloaded');
         };
 
-        // Only run once on component mount
         preloadCriticalImages();
-    }, []); // Empty dependency array - only runs once!
+    }, []);
 
-    // REPLACE with this optimized version:
     useEffect(() => {
         const preloadTabImages = () => {
-            const tabImages = serviceCategories[activeServiceTab]?.sections.map(section => section.image) || [];
+            const currentCategory = serviceCategories[activeServiceTab];
+            const tabImages = [currentCategory?.mainImage, ...(currentCategory?.galleryImages || [])].filter(Boolean);
 
-            // Only preload images that aren't already loaded or being loaded
             const imagesToLoad = tabImages.filter(imageSrc =>
                 imageSrc && !imagesLoaded[imageSrc]
             );
 
             if (imagesToLoad.length === 0) {
-                return; // All tab images already loaded
+                return;
             }
 
             log(`Preloading ${imagesToLoad.length} images for ${activeServiceTab} tab`);
@@ -805,23 +702,18 @@ export default function LandingPage() {
             });
         };
 
-        // Small delay to prevent rapid firing when user quickly switches tabs
         const timeoutId = setTimeout(preloadTabImages, 100);
         return () => clearTimeout(timeoutId);
-    }, [activeServiceTab]); // Only depend on activeServiceTab, not imagesLoaded
-
+    }, [activeServiceTab]);
 
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         log('Contact form submitted via Formspree');
 
-        // Call Formspree's handleSubmit
         await handleSubmit(e);
 
-        // Check if submission was successful
         if (state.succeeded) {
             log('Form successfully submitted to Formspree');
-            // Form will be reset automatically by Formspree
         }
     };
 
@@ -829,7 +721,7 @@ export default function LandingPage() {
         <div className="min-h-screen bg-gray-50 overflow-x-hidden">
             {/* Hero Section with Carousel */}
             <section className="relative h-screen text-white">
-                {/* Background Images - REPLACE the existing hero image section */}
+                {/* Background Images */}
                 <div className="absolute inset-0">
                     {slides.map((slide, index) => (
                         <div
@@ -837,7 +729,6 @@ export default function LandingPage() {
                             className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
                                 }`}
                         >
-                            {/* Loading placeholder */}
                             {!imagesLoaded[slide.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900 animate-pulse">
                                     <div className="absolute inset-0 flex items-center justify-center">
@@ -868,7 +759,6 @@ export default function LandingPage() {
                 <div className="relative h-full flex items-center px-4">
                     <div className="container mx-auto">
                         <div className="relative w-full max-w-4xl mx-auto">
-                            {/* Carousel Content */}
                             <div className="relative h-[70vh] min-h-[400px] flex items-center">
                                 {slides.map((slide, index) => (
                                     <div
@@ -879,13 +769,11 @@ export default function LandingPage() {
                                             }`}
                                     >
                                         <div className="w-full px-4 space-y-6">
-                                            {/* Desktop Layout - Left Aligned with Gradient Background */}
                                             <div className="hidden md:block">
                                                 <div className="inline-block bg-gradient-to-r from-black/70 to-transparent p-6 rounded-lg max-w-2xl">
                                                     <h1 className="text-3xl md:text-5xl font-bold pb-2 leading-tight whitespace-nowrap">
                                                         {slide.title}
                                                     </h1>
-
                                                     <h2 className="text-xl md:text-2xl text-orange-300 mb-4">
                                                         {slide.subtitle}
                                                     </h2>
@@ -895,7 +783,6 @@ export default function LandingPage() {
                                                 </div>
                                             </div>
 
-                                            {/* Mobile Layout - Centered */}
                                             <div className="md:hidden text-center">
                                                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300 pb-2 leading-tight">
                                                     {slide.title}
@@ -924,13 +811,13 @@ export default function LandingPage() {
                                 ))}
                             </div>
 
-                            {/* Carousel Controls */}
                             <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
                                 {slides.map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => setCurrentSlide(index)}
-                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-orange-500 w-8' : 'bg-white/50'}`}
+                                        className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-orange-500 w-8' : 'bg-white/50'
+                                            }`}
                                         aria-label={`Go to slide ${index + 1}`}
                                     />
                                 ))}
@@ -939,7 +826,6 @@ export default function LandingPage() {
                     </div>
                 </div>
 
-                {/* Scroll Indicator */}
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce">
                     <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
                         <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
@@ -983,7 +869,6 @@ export default function LandingPage() {
                         </div>
 
                         <div className="relative h-96 bg-gray-200 rounded-lg overflow-hidden shadow-xl">
-                            {/* Loading placeholder */}
                             {!imagesLoaded[content[language].about.image] && (
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
                                     <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
@@ -1006,11 +891,14 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* Services Section with Tabs */}
-            <section id="services" ref={(el) => {
-                sectionRefs.current.services = el;
-            }}
-                className="py-20 bg-gray-50">
+            {/* Services Section with New Layout */}
+            <section
+                id="services"
+                ref={(el) => {
+                    sectionRefs.current.services = el;
+                }}
+                className="py-20 bg-gray-50"
+            >
                 <div className="container mx-auto px-4">
                     <div className={`mb-12 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         <h2 className="text-4xl font-bold text-gray-800 mb-4 text-center md:text-left md:pl-8">
@@ -1021,7 +909,7 @@ export default function LandingPage() {
                         </p>
                     </div>
 
-                    {/* Tabs - Scrollable on mobile, better spacing */}
+                    {/* Service Tabs - Scrollable on mobile */}
                     <div className="flex justify-center md:justify-start mb-8 md:mb-12 px-2">
                         <div className="bg-white rounded-xl p-1 shadow-lg inline-flex max-w-full overflow-x-auto">
                             {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
@@ -1039,62 +927,150 @@ export default function LandingPage() {
                                 ))}
                         </div>
                     </div>
-                    {/* Service Content - Left/right on desktop, stacked on mobile */}
 
-                    {serviceCategories[activeServiceTab].sections.map((service, index) => (
-                        <div
-                            key={index}
-                            className={`mb-16 last:mb-0 transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}
-                        >
-                            <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 items-center`}>
-                                <div className="w-full md:w-1/2">
-                                    <div className="relative h-64 md:h-96 w-full rounded-xl overflow-hidden shadow-2xl">
-                                        {/* Loading placeholder for service images */}
-                                        {!imagesLoaded[service.image] && (
+                    {/* Service Content with New Layout */}
+                    <div className={`transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
+                        {serviceCategories[activeServiceTab] && (
+                            <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                                {/* Mobile Layout - Stack vertically */}
+                                <div className="block md:hidden">
+                                    {/* Main Image */}
+                                    <div className="relative h-64 w-full">
+                                        {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
                                             <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
                                                 <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
                                             </div>
                                         )}
-
                                         <Image
-                                            src={service.image}
-                                            alt={service.title}
+                                            src={serviceCategories[activeServiceTab].mainImage}
+                                            alt={serviceCategories[activeServiceTab].title}
                                             fill
-                                            className={`object-cover transition-opacity duration-500 ${imagesLoaded[service.image] ? 'opacity-100' : 'opacity-0'
+                                            className={`object-cover transition-opacity duration-500 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
                                                 }`}
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                            priority={index === 0 && activeServiceTab === 'roofing'}
-                                            quality={80}
-                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [service.image]: true }))}
+                                            sizes="100vw"
+                                            onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
                                         />
                                     </div>
-                                </div>
-                                <div className="w-full md:w-1/2 px-4 md:px-0">
-                                    <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">{service.title}</h3>
-                                    <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-                                    <ul className="space-y-3 mb-6">
-                                        {service.points.map((point: string, pointIndex: number) => (
-                                            <li key={pointIndex} className="flex items-start">
-                                                <CheckCircle className="w-5 h-5 text-orange-500 mr-3 mt-1 flex-shrink-0" />
-                                                <span className="text-gray-600">{point}</span>
-                                            </li>
+
+                                    {/* Text Content */}
+                                    <div className="p-6">
+                                        <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                                            {serviceCategories[activeServiceTab].title}
+                                        </h3>
+                                        <p className="text-gray-600 mb-4 leading-relaxed">
+                                            {serviceCategories[activeServiceTab].description}
+                                        </p>
+                                        <p className="text-gray-700 leading-relaxed mb-6">
+                                            {serviceCategories[activeServiceTab].textContent}
+                                        </p>
+                                        <button
+                                            onClick={() => {
+                                                const contactSection = document.getElementById('contact');
+                                                contactSection?.scrollIntoView({ behavior: 'smooth' });
+                                            }}
+                                            className="text-orange-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-orange-600"
+                                        >
+                                            {content[language].services.cta} <ArrowRight size={20} />
+                                        </button>
+                                    </div>
+
+                                    {/* Gallery Images */}
+                                    <div className="grid grid-cols-2 gap-2 p-6 pt-0">
+                                        {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
+                                            <div key={index} className="relative h-24 bg-gray-200 rounded-lg overflow-hidden">
+                                                {!imagesLoaded[image] && (
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                )}
+                                                <Image
+                                                    src={image}
+                                                    alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                    fill
+                                                    className={`object-cover transition-opacity duration-500 ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                        }`}
+                                                    sizes="50vw"
+                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                />
+                                            </div>
                                         ))}
-                                    </ul>
-                                    <button
-                                        onClick={() => {
-                                            const contactSection = document.getElementById('contact');
-                                            contactSection?.scrollIntoView({ behavior: 'smooth' });
-                                        }}
-                                        className="text-orange-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-orange-600"
-                                    >
-                                        {content[language].services.cta} <ArrowRight size={20} />
-                                    </button>
+                                    </div>
+                                </div>
+
+                                {/* Desktop Layout - Side by side */}
+                                <div className="hidden md:block">
+                                    <div className="grid md:grid-cols-2 gap-8 p-8">
+                                        {/* Left Side - Main Image and Text */}
+                                        <div className="space-y-6">
+                                            <div className="relative h-80 bg-gray-200 rounded-xl overflow-hidden shadow-lg">
+                                                {!imagesLoaded[serviceCategories[activeServiceTab].mainImage] && (
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse flex items-center justify-center">
+                                                        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+                                                    </div>
+                                                )}
+                                                <Image
+                                                    src={serviceCategories[activeServiceTab].mainImage}
+                                                    alt={serviceCategories[activeServiceTab].title}
+                                                    fill
+                                                    className={`object-cover transition-opacity duration-500 ${imagesLoaded[serviceCategories[activeServiceTab].mainImage] ? 'opacity-100' : 'opacity-0'
+                                                        }`}
+                                                    sizes="50vw"
+                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [serviceCategories[activeServiceTab].mainImage]: true }))}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Right Side - Text Content */}
+                                        <div className="flex flex-col justify-center space-y-6">
+                                            <div>
+                                                <h3 className="text-3xl font-bold text-gray-800 mb-4">
+                                                    {serviceCategories[activeServiceTab].title}
+                                                </h3>
+                                                <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+                                                    {serviceCategories[activeServiceTab].description}
+                                                </p>
+                                                <p className="text-gray-700 leading-relaxed mb-6">
+                                                    {serviceCategories[activeServiceTab].textContent}
+                                                </p>
+                                                <button
+                                                    onClick={() => {
+                                                        const contactSection = document.getElementById('contact');
+                                                        contactSection?.scrollIntoView({ behavior: 'smooth' });
+                                                    }}
+                                                    className="text-orange-500 font-semibold flex items-center gap-2 hover:gap-4 transition-all hover:text-orange-600"
+                                                >
+                                                    {content[language].services.cta} <ArrowRight size={20} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Gallery Images - Full Width */}
+                                    <div className="px-8 pb-8">
+                                        <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
+                                            {serviceCategories[activeServiceTab].galleryImages.map((image, index) => (
+                                                <div key={index} className="relative h-32 bg-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+                                                    {!imagesLoaded[image] && (
+                                                        <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
+                                                    )}
+                                                    <Image
+                                                        src={image}
+                                                        alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
+                                                        fill
+                                                        className={`object-cover transition-opacity duration-500 hover:scale-105 transition-transform ${imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
+                                                            }`}
+                                                        sizes="20vw"
+                                                        onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        )}
+                    </div>
                 </div>
             </section>
+
             {/* Testimonials Section */}
             <section
                 id="testimonials"
@@ -1141,7 +1117,6 @@ export default function LandingPage() {
                             </div>
                         </div>
 
-                        {/* Testimonial Navigation */}
                         <button
                             onClick={() => {
                                 setTestimonialSlide((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -1185,10 +1160,7 @@ export default function LandingPage() {
                         </div>
 
                         <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 shadow-xl">
-                            <form
-                                onSubmit={handleFormSubmit}
-                                className="space-y-6"
-                            >
+                            <form onSubmit={handleFormSubmit} className="space-y-6">
                                 {/* Success Message */}
                                 {state.succeeded && (
                                     <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mb-6">
@@ -1356,46 +1328,6 @@ export default function LandingPage() {
                 </div>
             </section>
 
-            {/* WhatsApp Floating Button */}
-            <div className="fixed bottom-20 right-6 z-50">
-                <a
-                    href="https://wa.me/6592267756?text=I%20need%20a%20quotation%20for%20your%20services."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg transition-all transform hover:scale-110 flex items-center justify-center group"
-                    title="Chat with us on WhatsApp"
-                >
-                    {/* WhatsApp Icon SVG */}
-                    <svg
-                        width="28"
-                        height="28"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="transition-transform group-hover:scale-110"
-                    >
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488" />
-                    </svg>
-
-                    {/* Pulse animation */}
-                    <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-20"></div>
-                </a>
-            </div>
-
-            {/* Language Toggle Button - Update positioning */}
-            <div className="fixed bottom-6 right-6 z-50">
-                <button
-                    onClick={() => {
-                        setLanguage(language === 'en' ? 'zh' : 'en');
-                        log(`Language switched to: ${language === 'en' ? 'Chinese' : 'English'}`);
-                    }}
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center gap-2 font-medium"
-                >
-                    <span className="text-sm">{language === 'en' ? '中文' : 'EN'}</span>
-                    <div className="w-1 h-1 bg-white rounded-full"></div>
-                    <span className="text-sm">{language === 'en' ? 'EN' : '中文'}</span>
-                </button>
-            </div>
-
             {/* Footer */}
             <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16">
                 <div className="container mx-auto px-4">
@@ -1461,6 +1393,10 @@ export default function LandingPage() {
                                     <CheckCircle className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
                                     <p className="text-sm text-gray-300">{content[language].footer.servicesSection.floorCoating}</p>
                                 </div>
+                                <div className="flex items-start space-x-2">
+                                    <CheckCircle className="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" />
+                                    <p className="text-sm text-gray-300">{content[language].footer.servicesSection.windowSealant}</p>
+                                </div>
                             </div>
                         </div>
 
@@ -1503,61 +1439,62 @@ export default function LandingPage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        {/* Bottom Bar */}
-                        <div className="border-t border-gray-700 pt-8">
-                            <div className="flex flex-col md:flex-row justify-between items-center">
-                                <p className="text-sm text-gray-400 mb-4 md:mb-0">{content[language].footer.copyright}</p>
-                                <div className="flex items-center space-x-4">
-                                    <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</a>
-                                    <span className="text-gray-600">|</span>
-                                    <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</a>
-                                </div>
+                    {/* Bottom Bar */}
+                    <div className="border-t border-gray-700 pt-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center">
+                            <p className="text-sm text-gray-400 mb-4 md:mb-0">{content[language].footer.copyright}</p>
+                            <div className="flex items-center space-x-4">
+                                <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Privacy Policy</a>
+                                <span className="text-gray-600">|</span>
+                                <a href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">Terms of Service</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
+
             <style jsx>{`
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideInLeft {
-      from { 
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to { 
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    @keyframes slideInRight {
-      from { 
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to { 
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    
-    .animate-fadeIn {
-      animation: fadeIn 1s ease-out forwards;
-    }
-    
-    .animate-slideInLeft {
-      animation: slideInLeft 0.8s ease-out forwards;
-    }
-    
-    .animate-slideInRight {
-      animation: slideInRight 0.8s ease-out forwards;
-    }
-  `}</style>
+                @keyframes fadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                @keyframes slideInLeft {
+                    from { 
+                        opacity: 0;
+                        transform: translateX(-50px);
+                    }
+                    to { 
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+                
+                @keyframes slideInRight {
+                    from { 
+                        opacity: 0;
+                        transform: translateX(50px);
+                    }
+                    to { 
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+                
+                .animate-fadeIn {
+                    animation: fadeIn 1s ease-out forwards;
+                }
+                
+                .animate-slideInLeft {
+                    animation: slideInLeft 0.8s ease-out forwards;
+                }
+                
+                .animate-slideInRight {
+                    animation: slideInRight 0.8s ease-out forwards;
+                }
+            `}</style>
         </div>
     );
 }
