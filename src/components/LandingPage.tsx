@@ -953,6 +953,67 @@ export default function LandingPage() {
                         </div>
                     </div>
 
+                    {/* Services Section with Complete Layout */}
+            <section 
+                id="services" 
+                ref={(el) => {
+                    sectionRefs.current.services = el;
+                }}
+                className="py-20 bg-gray-50"
+            >
+                <div className="container mx-auto px-4">
+                    <div className={`mb-12 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
+                        <h2 className="text-4xl font-bold text-gray-800 mb-4 text-center md:text-left md:pl-8">
+                            {content[language].services.title}
+                        </h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto text-center md:text-left md:mx-0 md:pl-8">
+                            {content[language].services.subtitle}
+                        </p>
+                    </div>
+
+                    {/* Service Tabs - Mobile: 2x2 Grid, Desktop: Horizontal */}
+                    <div className="flex justify-center md:justify-start mb-8 md:mb-12 px-2">
+                        {/* Mobile: 2x2 Grid Layout */}
+                        <div className="block md:hidden w-full max-w-md">
+                            <div className="grid grid-cols-2 gap-3">
+                                {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
+                                    .map(([key, category]) => (
+                                        <button
+                                            key={key}
+                                            onClick={() => setActiveServiceTab(key)}
+                                            className={`px-4 py-3 rounded-lg font-semibold transition-all duration-300 text-center ${
+                                                activeServiceTab === key
+                                                    ? 'bg-orange-500 text-white shadow-md'
+                                                    : 'bg-white text-gray-600 hover:text-orange-500 hover:bg-orange-50 shadow-sm'
+                                            }`}
+                                        >
+                                            {category.title}
+                                        </button>
+                                    ))}
+                            </div>
+                        </div>
+
+                        {/* Desktop: Horizontal Layout */}
+                        <div className="hidden md:block">
+                            <div className="bg-white rounded-xl p-1 shadow-lg inline-flex">
+                                {(Object.entries(serviceCategories) as [ServiceCategoryKey, typeof serviceCategories[keyof typeof serviceCategories]][])
+                                    .map(([key, category]) => (
+                                        <button
+                                            key={key}
+                                            onClick={() => setActiveServiceTab(key)}
+                                            className={`px-6 py-4 rounded-lg font-semibold transition-all duration-300 whitespace-nowrap ${
+                                                activeServiceTab === key
+                                                    ? 'bg-orange-500 text-white shadow-md'
+                                                    : 'text-gray-600 hover:text-orange-500 hover:bg-orange-50'
+                                            }`}
+                                        >
+                                            {category.title}
+                                        </button>
+                                    ))}
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Service Content */}
                     <div className={`transition-all duration-500 ${visibleSections.services ? 'animate-fadeIn' : 'opacity-0'}`}>
                         {serviceCategories[activeServiceTab] && (
@@ -1136,49 +1197,15 @@ export default function LandingPage() {
                                                     ? 'grid-cols-3' 
                                                     : serviceCategories[activeServiceTab].galleryImages.length === 4
                                                     ? 'grid-cols-2'
-                                                    : serviceCategories[activeServiceTab].galleryImages.length === 5
-                                                    ? 'grid-cols-3'
-                                                    : 'grid-cols-3'
+                                                    : 'grid-cols-3' // For 5+ images, use 3-column base
                                             }`}>
                                                 {serviceCategories[activeServiceTab].galleryImages.map((image, index) => {
-                                                    const totalImages = serviceCategories[activeServiceTab].galleryImages.length;
+                                                    const totalGalleryImages = serviceCategories[activeServiceTab].galleryImages.length;
                                                     
-                                                    // Special handling for 5 images: last 2 should span full width
-                                                    if (totalImages === 5 && index >= 3) {
-                                                        return (
-                                                            <div 
-                                                                key={index}
-                                                                className="col-span-3 relative h-40 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                                                                onClick={() => setModalImage(image)}
-                                                            >
-                                                                {!imagesLoaded[image] && (
-                                                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
-                                                                )}
-                                                                <Image
-                                                                    src={image}
-                                                                    alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
-                                                                    fill
-                                                                    className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                                                                        imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
-                                                                    }`}
-                                                                    sizes="100vw"
-                                                                    onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
-                                                                />
-                                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                                    <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
-                                                                        <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        );
-                                                    }
-                                                    
-                                                    // Special handling for 6 images: create 2x2 grid for bottom 4 images
-                                                    if (totalImages === 6) {
+                                                    // For 5 gallery images: first 3 in top row, last 2 in bottom row side by side
+                                                    if (totalGalleryImages === 5) {
                                                         if (index < 3) {
-                                                            // First 3 images in top row
+                                                            // First 3 images in 3-column layout
                                                             return (
                                                                 <div 
                                                                     key={index}
@@ -1208,10 +1235,11 @@ export default function LandingPage() {
                                                                 </div>
                                                             );
                                                         } else if (index === 3) {
-                                                            // Start new row for last 3 images, but with 2 columns for the first 2
+                                                            // Last 2 images in a 2-column row
                                                             return (
-                                                                <React.Fragment key={`row-${index}`}>
-                                                                    <div className="col-span-3 grid grid-cols-2 gap-4">
+                                                                <React.Fragment key={`bottom-row-${index}`}>
+                                                                    <div className="col-span-3 grid grid-cols-2 gap-4 justify-center">
+                                                                        {/* Gallery image 4 */}
                                                                         <div 
                                                                             className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
                                                                             onClick={() => setModalImage(image)}
@@ -1238,6 +1266,7 @@ export default function LandingPage() {
                                                                             </div>
                                                                         </div>
                                                                         
+                                                                        {/* Gallery image 5 */}
                                                                         {serviceCategories[activeServiceTab].galleryImages[4] && (
                                                                             <div 
                                                                                 className="relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
@@ -1268,49 +1297,19 @@ export default function LandingPage() {
                                                                     </div>
                                                                 </React.Fragment>
                                                             );
-                                                        } else if (index === 5) {
-                                                            // Last image spans full width
-                                                            return (
-                                                                <div 
-                                                                    key={index}
-                                                                    className="col-span-3 relative h-48 bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer"
-                                                                    onClick={() => setModalImage(image)}
-                                                                >
-                                                                    {!imagesLoaded[image] && (
-                                                                        <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-400 animate-pulse"></div>
-                                                                    )}
-                                                                    <Image
-                                                                        src={image}
-                                                                        alt={`${serviceCategories[activeServiceTab].title} ${index + 1}`}
-                                                                        fill
-                                                                        className={`object-cover transition-all duration-700 group-hover:scale-105 ${
-                                                                            imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
-                                                                        }`}
-                                                                        sizes="100vw"
-                                                                        onLoad={() => setImagesLoaded(prev => ({ ...prev, [image]: true }))}
-                                                                    />
-                                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                                                        <div className="bg-white/95 backdrop-blur-sm rounded-full p-3 transform scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg">
-                                                                            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                                                            </svg>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            );
                                                         }
                                                         // Skip rendering index 4 since it's handled in index 3
                                                         return null;
                                                     }
                                                     
-                                                    // Default case for other image counts
+                                                    // Default case for other image counts (1, 2, 3, 4 gallery images)
                                                     return (
                                                         <div 
                                                             key={index}
                                                             className={`relative bg-gray-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer ${
-                                                                totalImages <= 3
+                                                                totalGalleryImages <= 3
                                                                     ? 'h-48'
-                                                                    : totalImages === 4
+                                                                    : totalGalleryImages === 4
                                                                     ? 'h-52'
                                                                     : 'h-48'
                                                             }`}
@@ -1327,9 +1326,9 @@ export default function LandingPage() {
                                                                     imagesLoaded[image] ? 'opacity-100' : 'opacity-0'
                                                                 }`}
                                                                 sizes={
-                                                                    totalImages <= 3
+                                                                    totalGalleryImages <= 3
                                                                         ? '33vw'
-                                                                        : totalImages === 4
+                                                                        : totalGalleryImages === 4
                                                                         ? '50vw'
                                                                         : '33vw'
                                                                 }
