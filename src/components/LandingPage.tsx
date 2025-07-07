@@ -1129,28 +1129,20 @@ export default function LandingPage() {
 
                                             {/* Text Field - Right */}
                                             <div className="h-80 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-6 flex flex-col justify-center shadow-lg border border-orange-200">
-                                                <h4 className="text-xl font-bold text-gray-800 mb-4">Key Features</h4>
+                                                <h4 className="text-xl font-bold text-gray-800 mb-4">
+                                                    {content[language].services.keyFeatures.title}
+                                                </h4>
                                                 <ul className="space-y-3">
-                                                    <li className="flex items-start gap-3">
-                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                        <span className="text-gray-700">Professional installation and maintenance</span>
-                                                    </li>
-                                                    <li className="flex items-start gap-3">
-                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                        <span className="text-gray-700">Weather-resistant materials</span>
-                                                    </li>
-                                                    <li className="flex items-start gap-3">
-                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                        <span className="text-gray-700">Long-term durability guarantee</span>
-                                                    </li>
-                                                    <li className="flex items-start gap-3">
-                                                        <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
-                                                        <span className="text-gray-700">Expert consultation included</span>
-                                                    </li>
+                                                    {content[language].services.keyFeatures.items.map((feature, index) => (
+                                                        <li key={index} className="flex items-start gap-3">
+                                                            <CheckCircle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                                                            <span className="text-gray-700">{feature}</span>
+                                                        </li>
+                                                    ))}
                                                 </ul>
                                             </div>
                                         </div>
-
+                                        
                                         {/* Bottom Row - All Gallery Images in Adaptive Grid */}
                                         <div className="mt-6">
                                             <div className={`grid gap-4 ${
